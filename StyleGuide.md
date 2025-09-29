@@ -27,6 +27,7 @@ DRY Principle https://www.geeksforgeeks.org/software-engineering/dont-repeat-you
 ---
 
 2025
-Tanner Kontir
-Will Rao
+
+Tanner Kontir,
+Will Rao,
 Phone Kant
