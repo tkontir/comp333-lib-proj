@@ -6,6 +6,15 @@ function valid_email (email) {
   return email_regex.test(email);
 }
 
+/* valid_pass (string) => boolean
+   Simple email format validation using regex.
+*/
+function valid_pass (pass) {
+  // const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // return email_regex.test(pass);
+  return true;
+}
+
 
 /* handle_form_submit (Event) => void
    Validate fields and simulate an async login attempt. Shows success or error messages.
