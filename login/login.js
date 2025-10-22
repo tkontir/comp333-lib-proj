@@ -1,3 +1,12 @@
+/* valid_email (string) => boolean
+   Simple email format validation using regex.
+*/
+function valid_email (email) {
+  const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return email_regex.test(email);
+}
+
+
 /* handle_form_submit (Event) => void
    Validate fields and simulate an async login attempt. Shows success or error messages.
 */
