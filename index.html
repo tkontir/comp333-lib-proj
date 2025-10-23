@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Sign In</title>
+		<link rel="stylesheet" href="login/login.css">
+	</head>
+	<body>
+		<a href="testing/tests.html" class="top-left-btn" aria-label="Open tests page">Click here to run unit tests.</a>
+
+		<main class="page-wrapper">
+			<h1 id="title" class="heading">COMP333 Library Project</h1>
+			<section class="card" aria-labelledby="login-heading">
+				<h1 id="login-heading" class="heading" style="padding-bottom: 10px;">Sign in</h1>
+
+				<form id="login_form" class="login-form" novalidate>
+					<div class="field">
+						<label for="username_input">Email</label>
+						<input id="username_input" name="username" type="text" autocomplete="username"/>
+						<div class="field-help" id="username_help" aria-live="polite"></div>
+					</div>
+
+					<div class="field">
+						<label for="password_input">Password</label>
+						<div class="password-row">
+							<input id="password_input" name="password" type="password" autocomplete="current-password"/>
+						</div>
+						<div class="field-help" id="password_help" aria-live="polite"></div>
+					</div>
+
+					
+
+					<div id="form_message" role="status" aria-live="polite"></div>
+				</form>
+				<div class="actions">
+					<button id="login_button" class="primary">Sign in</button>
+				</div>
+			</section>
+		</main>
+
+		<script src="login/login.js" defer></script>
+	</body>
+</html>
+
+
+
+<!-- http://0.0.0.0:5500/index.html -->
