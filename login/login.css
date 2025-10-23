@@ -35,6 +35,8 @@ body{
 .heading{margin:0 0 6px 0;font-size:1.5rem}
 .subheading{margin:0 0 18px 0;color:var(--muted);font-size:0.95rem}
 
+#title{ text-align:center; padding-bottom:10px }
+
 .login-form{display:flex;flex-direction:column;gap:var(--gap)}
 .field{display:flex;flex-direction:column;gap:6px}
 .field label{font-weight:600;font-size:0.95rem}
@@ -44,15 +46,11 @@ body{
 
 .password-row{display:flex;gap:8px}
 .password-row input{flex:1}
-.toggle-btn{background:transparent;border:1px solid #e6eefc;padding:8px 10px;border-radius:8px;color:var(--primary);cursor:pointer}
-.toggle-btn:focus{outline:none;box-shadow:0 0 0 3px rgba(59,130,246,0.15)}
 
 .actions{display:flex;gap:12px;align-items:center}
 .primary{background:var(--primary);color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer}
 .primary:hover{opacity:0.95}
 .link{background:transparent;border:none;color:var(--primary);cursor:pointer;text-decoration:underline}
-
-.card-footer{margin-top:18px;color:var(--muted)}
 
 #form_message{margin-top:6px;color:var(--error);font-weight:600}
 
