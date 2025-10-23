@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Room Reservation System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Library Room Reservation</h1>
+        <p>Reservation System</p>
+    </header>
+
+    <div class="container">
+        <div class="instructions">
+            <p>Select rooms and make reservations</p>
+        </div>
+
+        <div class="filter-section">
+            <label for="filterBy">Filter By:</label>
+            <select id="filterBy">
+                <option value="library">Library</option>
+                <option value="availability">Availability</option>
+            </select>
+        </div>
+
+        <div class="selection-area">
+            <div id="libraryFilterView">
+                <label for="library">Select Library:</label>
+                <select id="library">
+                    <option value="">-- Choose a Library --</option>
+                </select>
+
+                <div id="floorSection" class="hidden">
+                    <label for="floor">Select Floor:</label>
+                    <select id="floor">
+                        <option value="">-- Choose a Floor --</option>
+                    </select>
+                </div>
+
+                <div id="roomSection" class="hidden">
+                    <label for="room">Select Room:</label>
+                    <select id="room">
+                        <option value="">-- Choose a Room --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="availabilityFilterView" class="hidden">
+                <label for="availableRoom">Select Room:</label>
+                <select id="availableRoom">
+                    <option value="">-- Choose a Room --</option>
+                </select>
+            </div>
+
+            <button id="reserveBtn" disabled>Reserve Room</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
