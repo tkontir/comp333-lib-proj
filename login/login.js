@@ -29,7 +29,6 @@ function valid_pass (pass) {
 }
 
 
-
 /* login () => void
   Function to handle login form submission.
 */
@@ -41,6 +40,9 @@ function login () {
   let pass = document.getElementById('password_input').value;
   console.log("Email: " + email);
   console.log("Pass: " + pass);
+
+  // navigate to home page
+  window.location.href = "home/home.html";
 }
 
 
