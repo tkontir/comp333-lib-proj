@@ -3,7 +3,7 @@
     "generatedAt": "2025-10-28T00:00:00Z",
     "rooms": [
         {
-            "id": "001",
+            "id": "1",
             "name": "Room 1",
             "building": "Exely",
             "location": {
@@ -19,7 +19,7 @@
             "description": "Enter room description here."
         },
         {
-            "id": "002",
+            "id": "2",
             "name": "Room 2",
             "building": "Exely",
             "location": {

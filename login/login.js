@@ -45,9 +45,24 @@ function login () {
   window.location.href = "home/home.html";
 }
 
+function gotoRoom (room) {
+  roomId = room.target.dataset.id
+  console.log(roomId)
+
+  const targetPage = 'room/room.html';
+  const newURL = `${targetPage}?id=${roomId}`;
+
+  window.location.href = newURL;
+}
+
 
 // attach event listeners when DOM is ready
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('login_button');
   form.addEventListener('click', login);
+
+  const testBtn = document.getElementById('test_room1');
+  testBtn.addEventListener('click', gotoRoom);
+  const testBtn2 = document.getElementById('test_room2');
+  testBtn2.addEventListener('click', gotoRoom);
 });
