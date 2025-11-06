@@ -50,6 +50,8 @@ body{
 .actions{display:flex;gap:12px;align-items:center}
 .primary{background:var(--primary);color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer}
 .primary:hover{opacity:0.95}
+.secondary{background:var(--primary);color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer}
+.secondary:hover{opacity:0.95}
 .link{background:transparent;border:none;color:var(--primary);cursor:pointer;text-decoration:underline}
 
 #form_message{margin-top:6px;color:var(--error);font-weight:600}

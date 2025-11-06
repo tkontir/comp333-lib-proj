@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Library Rooms - Wesleyan University</title>
+		<link rel="stylesheet" href="rooms.css">
+	</head>
+	<body>
+		<script src="rooms.js" defer></script>
+		
+		<!-- Navigation -->
+		<nav class="navbar">
+			<div class="nav-container">
+				<a href="../index.html" class="nav-link">← Back to Home</a>
+				<h1 class="nav-title">Rooms</h1>
+			</div>
+		</nav>
+
+		<!-- Main Content -->
+		<main class="main-content">
+			<div class="page-header">
+				<h1>Available Study Rooms</h1>
+				<p class="page-description">Browse and select from our collection of library study rooms across campus.</p>
+			</div>
+
+			<!-- Filters Section -->
+			<div class="filters-section">
+				<div class="filters-container">
+					<h2>Filter Rooms</h2>
+					<div class="filter-controls">
+						<div class="filter-group">
+							<label for="building-filter">Building:</label>
+							<select id="building-filter">
+								<option value="">All Buildings</option>
+								<option value="Olin">Olin</option>
+								<option value="Exley">Science Library (Exley)</option>
+							</select>
+						</div>
+						<div class="filter-group">
+							<label for="capacity-filter">Minimum Capacity:</label>
+							<select id="capacity-filter">
+								<option value="">Any Capacity</option>
+								<option value="4">4+ seats</option>
+								<option value="6">6+ seats</option>
+								<option value="8">8+ seats</option>
+							</select>
+						</div>
+						<div class="filter-group">
+							<label for="availability-filter">Availability:</label>
+							<select id="availability-filter">
+								<option value="">All Rooms</option>
+								<option value="available">Available Only</option>
+								<option value="unavailable">Unavailable Only</option>
+							</select>
+						</div>
+					</div>
+					<button id="clear-filters" class="clear-filters-btn">Clear Filters</button>
+				</div>
+			</div>
+
+			<!-- Loading State -->
+			<div id="loading-state" class="loading-container">
+				<div class="loading-spinner"></div>
+				<p>Loading rooms...</p>
+			</div>
+
+			<!-- Error State -->
+			<div id="error-state" class="error-container hidden">
+				<div class="error-message">
+					<h2>Unable to Load Rooms</h2>
+					<p>There was an error loading the room data. Please try again later.</p>
+					<button id="retry-button" class="retry-btn">Retry</button>
+				</div>
+			</div>
+
+			<!-- Rooms Grid -->
+			<div id="rooms-container" class="rooms-container hidden">
+				<div id="rooms-grid" class="rooms-grid">
+					<!-- Room cards will be dynamically populated here -->
+				</div>
+				<div id="no-results" class="no-results hidden">
+					<h3>No rooms match your criteria</h3>
+					<p>Try adjusting your filters to see more rooms.</p>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>

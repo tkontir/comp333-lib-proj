@@ -19,7 +19,7 @@
         {
             "id": "2",
             "name": "Science Library Room 77",
-            "building": "Exely",
+            "building": "Exley",
             "location": {
                 "floor": "0",
                 "roomNumber": "77"
@@ -32,7 +32,7 @@
         {
             "id": "3",
             "name": "Science Library Room 78",
-            "building": "Exely",
+            "building": "Exley",
             "location": {
                 "floor": "0",
                 "roomNumber": "78"
@@ -45,7 +45,7 @@
         {
             "id": "4",
             "name": "Science Library Room 80",
-            "building": "Exely",
+            "building": "Exley",
             "location": {
                 "floor": "0",
                 "roomNumber": "80"
@@ -58,7 +58,7 @@
         {
             "id": "5",
             "name": "Science Library Room 87",
-            "building": "Exely",
+            "building": "Exley",
             "location": {
                 "floor": "0",
                 "roomNumber": "87"
@@ -71,7 +71,7 @@
         {
             "id": "6",
             "name": "Science Library Room 88",
-            "building": "Exely",
+            "building": "Exley",
             "location": {
                 "floor": "0",
                 "roomNumber": "88"
@@ -84,7 +84,7 @@
         {
             "id": "7",
             "name": "Science Library Room 260",
-            "building": "Exely",
+            "building": "Exley",
             "location": {
                 "floor": "2",
                 "roomNumber": "260"
@@ -97,7 +97,7 @@
         {
             "id": "8",
             "name": "Science Library Room 266",
-            "building": "Exely",
+            "building": "Exley",
             "location": {
                 "floor": "2",
                 "roomNumber": "266"
@@ -110,7 +110,7 @@
         {
             "id": "9",
             "name": "Science Library Room 268",
-            "building": "Exely",
+            "building": "Exley",
             "location": {
                 "floor": "2",
                 "roomNumber": "268"
@@ -123,7 +123,7 @@
         {
             "id": "10",
             "name": "Science Library Room 269",
-            "building": "Exely",
+            "building": "Exley",
             "location": {
                 "floor": "2",
                 "roomNumber": "269"
@@ -136,7 +136,7 @@
         {
             "id": "11",
             "name": "Science Library Room 270",
-            "building": "Exely",
+            "building": "Exley",
             "location": {
                 "floor": "2",
                 "roomNumber": "270"
@@ -145,19 +145,6 @@
             "features": [
             ],
             "description": "On Science Library 2nd floor"
-        },
-        {
-            "id": "12",
-            "name": "Science Library Room 272",
-            "building": "",
-            "location": {
-                "floor": "",
-                "roomNumber": ""
-            },
-            "seats": 0,
-            "features": [
-            ],
-            "description": "Not available"
         }
     ]
 }
