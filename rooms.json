@@ -3,36 +3,161 @@
     "generatedAt": "2025-10-28T00:00:00Z",
     "rooms": [
         {
-            "id": "001",
-            "name": "Room 1",
-            "building": "Exely",
+            "id": "1",
+            "name": "Olin Room 251",
+            "building": "Olin",
             "location": {
-                "floor": 1,
-                "roomNumber": "101"
+                "floor": "2a",
+                "roomNumber": "251"
             },
-            "seats": 6,
+            "seats": 8,
             "features": [
-                "whiteboard",
-                "blackboard",
-                "projector"
+                "blackboard"
             ],
-            "description": "Enter room description here."
+            "description": "On Olin floor 2A Olin floor 2A map: https://www.wesleyan.edu/libr/images/floorplans-maps/olin_floor_2a.jpg"
         },
         {
-            "id": "002",
-            "name": "Room 2",
+            "id": "2",
+            "name": "Science Library Room 77",
             "building": "Exely",
             "location": {
-                "floor": 1,
-                "roomNumber": "102"
+                "floor": "0",
+                "roomNumber": "77"
+            },
+            "seats": 5,
+            "features": [
+            ],
+            "description": "On Science Library ground floor"
+        },
+        {
+            "id": "3",
+            "name": "Science Library Room 78",
+            "building": "Exely",
+            "location": {
+                "floor": "0",
+                "roomNumber": "78"
+            },
+            "seats": 4,
+            "features": [
+            ],
+            "description": "On Science Library ground floor"
+        },
+        {
+            "id": "4",
+            "name": "Science Library Room 80",
+            "building": "Exely",
+            "location": {
+                "floor": "0",
+                "roomNumber": "80"
+            },
+            "seats": 4,
+            "features": [
+            ],
+            "description": "On Science Library ground floor"
+        },
+        {
+            "id": "5",
+            "name": "Science Library Room 87",
+            "building": "Exely",
+            "location": {
+                "floor": "0",
+                "roomNumber": "87"
+            },
+            "seats": 5,
+            "features": [
+            ],
+            "description": "On Science Library ground floor"
+        },
+        {
+            "id": "6",
+            "name": "Science Library Room 88",
+            "building": "Exely",
+            "location": {
+                "floor": "0",
+                "roomNumber": "88"
+            },
+            "seats": 9,
+            "features": [
+            ],
+            "description": "On Science Library ground floor"
+        },
+        {
+            "id": "7",
+            "name": "Science Library Room 260",
+            "building": "Exely",
+            "location": {
+                "floor": "2",
+                "roomNumber": "260"
+            },
+            "seats": 8,
+            "features": [
+            ],
+            "description": "On Science Library 2nd floor"
+        },
+        {
+            "id": "8",
+            "name": "Science Library Room 266",
+            "building": "Exely",
+            "location": {
+                "floor": "2",
+                "roomNumber": "266"
             },
             "seats": 6,
             "features": [
-                "whiteboard",
-                "blackboard",
-                "projector"
             ],
-            "description": "Enter room description here."
+            "description": "On Science Library 2nd floor."
+        },
+        {
+            "id": "9",
+            "name": "Science Library Room 268",
+            "building": "Exely",
+            "location": {
+                "floor": "2",
+                "roomNumber": "268"
+            },
+            "seats": 6,
+            "features": [
+            ],
+            "description": "On Science Library 2nd floor"
+        },
+        {
+            "id": "10",
+            "name": "Science Library Room 269",
+            "building": "Exely",
+            "location": {
+                "floor": "2",
+                "roomNumber": "269"
+            },
+            "seats": 4,
+            "features": [
+            ],
+            "description": "On Science Library 2nd floor"
+        },
+        {
+            "id": "11",
+            "name": "Science Library Room 270",
+            "building": "Exely",
+            "location": {
+                "floor": "2",
+                "roomNumber": "270"
+            },
+            "seats": 4,
+            "features": [
+            ],
+            "description": "On Science Library 2nd floor"
+        },
+        {
+            "id": "12",
+            "name": "Science Library Room 272",
+            "building": "",
+            "location": {
+                "floor": "",
+                "roomNumber": ""
+            },
+            "seats": 0,
+            "features": [
+            ],
+            "description": "Not available"
         }
     ]
 }
