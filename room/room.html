@@ -3,15 +3,89 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Room</title>
+		<title>Library Room Details</title>
 		<link rel="stylesheet" href="room_gui.css">
 	</head>
 	<body>
-        <a>Room</a>
 		<script src="room.js" defer></script>
+		
+		<!-- Navigation -->
+		<nav class="navbar">
+			<div class="nav-container">
+				<a href="../index.html" class="nav-link">← Back</a>
+				<h1 class="nav-title">Wesleyan University</h1>
+			</div>
+		</nav>
+
+		<!-- Loading State -->
+		<div id="loading-state" class="loading-container">
+			<div class="loading-spinner"></div>
+			<p>Loading room details...</p>
+		</div>
+
+		<!-- Error State -->
+		<div id="error-state" class="error-container hidden">
+			<div class="error-message">
+				<h2>Room Not Found</h2>
+				<p>The requested room could not be found or there was an error loading the room data.</p>
+				<a href="../index.html" class="error-link">Return to Room List</a>
+			</div>
+		</div>
+
+		<!-- Room Content -->
+		<div id="room-container" class="container hidden">
+			<div class="room-header">
+				<div class="room-image-container">
+					<img id="room-image" src="" alt="Room Image" class="room-image" />
+					<div class="room-image-placeholder">
+						<p>Insert Image Here</p>
+					</div>
+				</div>
+				<div class="room-info">
+					<h1 id="room-name" class="room-title"></h1>
+					<div class="room-details">
+						<div class="detail-item">
+							<span class="detail-label">Building:</span>
+							<span id="room-building" class="detail-value"></span>
+						</div>
+						<div class="detail-item">
+							<span class="detail-label">Floor:</span>
+							<span id="room-floor" class="detail-value"></span>
+						</div>
+						<div class="detail-item">
+							<span class="detail-label">Room Number:</span>
+							<span id="room-number" class="detail-value"></span>
+						</div>
+						<div class="detail-item">
+							<span class="detail-label">Capacity:</span>
+							<span id="room-capacity" class="detail-value"></span>
+						</div>
+						<div class="detail-item availability-item">
+							<span class="detail-label">Status:</span>
+							<span id="room-availability" class="detail-value availability-badge"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="room-description">
+				<h2>Room Description</h2>
+				<p id="room-description-text"></p>
+			</div>
+
+			<div class="room-actions">
+				<button id="book-room-btn" class="primary-btn">Book This Room</button>
+				<button id="check-availability-btn" class="secondary-btn">Check Availability</button>
+			</div>
+
+			<!-- Booking Modal (placeholder for future functionality) -->
+			<div id="booking-modal" class="modal hidden">
+				<div class="modal-content">
+					<span class="modal-close">&times;</span>
+					<h3>Add more stuff here</h3>
+					<p>Work in Progress</p>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
-
-
-
-<!-- http://0.0.0.0:5500/index.html -->
