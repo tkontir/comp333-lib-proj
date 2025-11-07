@@ -1,38 +1,7 @@
-// individual library room class
-class Room {
-    // constructor now accepts id as the first parameter and assigns it correctly
-    constructor(id, name, location, capacity, image, description) {
-        // Unique identifier
-        this.id = id;
+/* loadRooms() => object
+    This function opens the room info JSON and returns the parsed data
 
-        // Room number/name
-        this.name = name;
-
-        // Room description
-        this.description = description;
-
-        // Number of seats in the room
-        this.capacity = capacity;
-
-        // Availability of the room
-        this.availability = true;
-
-        // Image of the room
-        this.image = image;
-
-        // Location of the room
-        this.location = location;
-
-        // Bookings for the room
-        this.bookings = [];
-    }
-}
-
-/**
- * Load and parse the rooms.json file.
- * Returns a Promise that resolves to the parsed JSON (usually an array of rooms).
- * Throws an error if the fetch fails or the JSON is invalid.
- */
+*/
 async function loadRooms() {
     try {
         const res = await fetch('/rooms.json');
@@ -47,11 +16,11 @@ async function loadRooms() {
     }
 }
 
-/**
- * Find and return a room by id from rooms.json.
- * Returns the room object or null if not found.
- * Handles both top-level array and an object like { rooms: [...] }.
- */
+
+/* loadRoomById(id : int) => object|null
+    This function parses through the rooms data and returns the room with the matching ID.
+    Returns null if no room is found.
+*/
 async function loadRoomById(id) {
     if (id == null) return null;
     const data = await loadRooms();
@@ -68,14 +37,9 @@ async function loadRoomById(id) {
     return roomsArray.find(r => String(r.id) === String(id)) || null;
 }
 
-// Expose helpers globally so other scripts/pages can call them
-// window.loadRooms = loadRooms;
-// window.loadRoomById = loadRoomById;
-
-/**
- * Render room details into the DOM.
- * Takes a room object and populates all the HTML elements.
- */
+/* render_room_details(room : object) => null
+    This function takes in the room object and updates the HTML elements on the page
+*/
 function render_room_details(room) {
     // Update room information
     document.getElementById('room-name').textContent = room.name || 'Unknown Room';
@@ -91,7 +55,7 @@ function render_room_details(room) {
     availability_element.textContent = is_available ? 'Available' : 'Unavailable';
     availability_element.className = `detail-value availability-badge ${is_available ? 'available' : 'unavailable'}`;
 
-    // Handle room image (placeholder for now since rooms.json doesn't have image URLs)
+    // placeholder images since we havent done urls yet
     const image_element = document.getElementById('room-image');
     if (room.image && room.image !== '') {
         image_element.src = room.image;
@@ -99,7 +63,7 @@ function render_room_details(room) {
         image_element.parentElement.querySelector('.room-image-placeholder').style.display = 'none';
     }
 
-    // Render features (only if features container exists)
+    // Render features
     const features_container = document.getElementById('features-list');
     if (features_container) {
         render_room_features(room.features || []);
@@ -119,10 +83,10 @@ function render_room_details(room) {
     }
 }
 
-/**
- * Render room features into the features grid.
- * Takes an array of feature strings and creates feature items.
- */
+/* render_room_features(features : array) => null
+    Render room features into the features grid.
+    Takes an array of feature strings and creates feature items.
+*/
 function render_room_features(features) {
     const features_container = document.getElementById('features-list');
     if (!features_container) {
@@ -142,10 +106,10 @@ function render_room_features(features) {
     });
 }
 
-/**
- * Create a feature element for the features grid.
- * Takes a feature string and returns a DOM element.
- */
+/* create_feature_element(feature : string) => HTMLElement
+    Create a feature element for the features grid.
+    Takes a feature string and returns a DOM element representing that feature.
+*/
 function create_feature_element(feature) {
     const feature_div = document.createElement('div');
     feature_div.className = 'feature-item';
@@ -181,36 +145,36 @@ function create_feature_element(feature) {
     return feature_div;
 }
 
-/**
- * Show loading state while data is being fetched.
- */
+/* show_loading_state() => null
+    Show loading state while data is being fetched.
+*/
 function show_loading_state() {
     document.getElementById('loading-state').classList.remove('hidden');
     document.getElementById('room-container').classList.add('hidden');
     document.getElementById('error-state').classList.add('hidden');
 }
 
-/**
- * Show error state when room is not found or error occurs.
- */
+/* show_error_state() => null
+    Show error state when room is not found or an error occurs.
+*/
 function show_error_state() {
     document.getElementById('loading-state').classList.add('hidden');
     document.getElementById('room-container').classList.add('hidden');
     document.getElementById('error-state').classList.remove('hidden');
 }
 
-/**
- * Show room content when data is successfully loaded.
- */
+/* show_room_content() => null
+    Show room content when data is successfully loaded.
+*/
 function show_room_content() {
     document.getElementById('loading-state').classList.add('hidden');
     document.getElementById('error-state').classList.add('hidden');
     document.getElementById('room-container').classList.remove('hidden');
 }
 
-/**
- * Initialize modal functionality for booking.
- */
+/* initialize_modal() => null
+    Initialize modal functionality for booking.
+*/
 function initialize_modal() {
     const modal = document.getElementById('booking-modal');
     const book_button = document.getElementById('book-room-btn');
@@ -236,9 +200,9 @@ function initialize_modal() {
     });
 }
 
-/**
- * Initialize availability check functionality.
- */
+/* initialize_availability_check() => null
+    Initialize availability check functionality.
+*/
 function initialize_availability_check() {
     const availability_button = document.getElementById('check-availability-btn');
     

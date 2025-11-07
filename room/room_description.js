@@ -1,5 +1,4 @@
 // Implement the individual room website page.
-
 class RoomDescription {
     constructor(room) {
         this.room = room;
