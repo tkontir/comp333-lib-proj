@@ -53,12 +53,49 @@ function render_room_details(room) {
     availability_element.textContent = is_available ? 'Available' : 'Unavailable';
     availability_element.className = `detail-value availability-badge ${is_available ? 'available' : 'unavailable'}`;
 
-    // placeholder images since we havent done urls yet
+    /* load_room_image (room object) => void
+       Load room images based on room number and building.
+       Images are stored in ../rooms/images/ with naming patterns:
+       - Olin: olin_[roomNumber].png 
+       - Exley (Science Library): scili_[roomNumber].png
+       Falls back to placeholder if image not found or fails to load. */
+    // Load room images based on room number
     const image_element = document.getElementById('room-image');
-    if (room.image && room.image !== '') {
-        image_element.src = room.image;
-        image_element.style.display = 'block';
-        image_element.parentElement.querySelector('.room-image-placeholder').style.display = 'none';
+    const placeholder_element = image_element.parentElement.querySelector('.room-image-placeholder');
+    
+    // Determine image path based on room number and building
+    let image_path = null;
+    
+    if (room.location?.roomNumber) {
+        const room_number = room.location.roomNumber;
+        
+        if (room.building === 'Olin') {
+            image_path = `../rooms/images/olin_${room_number}.png`;
+        } else if (room.building === 'Exley') {
+            image_path = `../rooms/images/scili_${room_number}.png`;
+        }
+    }
+    
+    if (image_path) {
+        // Try to load the image
+        const test_image = new Image();
+        test_image.onload = function() {
+            // Image exists and loaded successfully
+            image_element.src = image_path;
+            image_element.style.display = 'block';
+            placeholder_element.style.display = 'none';
+        };
+        test_image.onerror = function() {
+            // Image doesn't exist or failed to load, keep placeholder
+            console.log(`Image not found: ${image_path}`);
+            image_element.style.display = 'none';
+            placeholder_element.style.display = 'flex';
+        };
+        test_image.src = image_path;
+    } else {
+        // No image available for this room, keep placeholder
+        image_element.style.display = 'none';
+        placeholder_element.style.display = 'flex';
     }
 
     // Render features

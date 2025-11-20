@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Science Library Floor Plan - Wesleyan University</title>
+		<link rel="stylesheet" href="map.css">
+	</head>
+	<body>
+		<script src="map.js" defer></script>
+		
+		<!-- Navigation -->
+		<nav class="navbar">
+			<div class="nav-container">
+				<a href="rooms.html" class="nav-link">← Back to Room List</a>
+				<h1 class="nav-title">Science Library Floor Plan</h1>
+				<div class="nav-actions">
+					<button id="list-view-btn" class="list-view-button">
+						List View
+					</button>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Main Content -->
+		<main class="main-content">
+			<!-- Loading State -->
+			<div id="loading-state" class="loading-container">
+				<div class="loading-spinner"></div>
+				<p>Loading floor plan...</p>
+			</div>
+
+			<!-- Error State -->
+			<div id="error-state" class="error-container hidden">
+				<div class="error-message">
+					<h2>Unable to Load Floor Plan</h2>
+					<p>There was an error loading the floor plan. Please try the list view instead.</p>
+					<a href="rooms.html" class="error-link">Go to List View</a>
+				</div>
+			</div>
+
+			<!-- Map Container -->
+			<div id="map-container" class="map-container hidden">
+				<div class="floor-plan-wrapper">
+					<div class="floor-plan-container">
+						<img id="floor-plan" src="../science_floorplan.png" alt="Science Library Floor Plan" class="floor-plan-image">
+						
+						<!-- Room Buttons - Positioned absolutely over the floor plan -->
+						<!-- Ground Floor Rooms -->
+						<button class="room-marker" data-room-id="2" data-room-number="77" style="left: 71.25%; top: 83.75%;">
+							<span class="room-number">77</span>
+							<span class="room-status available">●</span>
+						</button>
+						
+						<button class="room-marker" data-room-id="3" data-room-number="78" style="left: 72.5%; top: 86.75%;">
+							<span class="room-number">78</span>
+							<span class="room-status available">●</span>
+						</button>
+						
+						<button class="room-marker" data-room-id="4" data-room-number="80" style="left: 63%; top: 86.75%;">
+							<span class="room-number">80</span>
+							<span class="room-status available">●</span>
+						</button>
+						
+						<button class="room-marker" data-room-id="5" data-room-number="87" style="left: 15%; top: 86.5%;">
+							<span class="room-number">87</span>
+							<span class="room-status available">●</span>
+						</button>
+						
+						<button class="room-marker" data-room-id="6" data-room-number="88" style="left: 14%; top: 83.25%;">
+							<span class="room-number">88</span>
+							<span class="room-status available">●</span>
+						</button>
+						
+						<!-- 2nd Floor Rooms -->
+						<button class="room-marker" data-room-id="7" data-room-number="260" style="left: 71%; top: 23.5%;">
+							<span class="room-number">260</span>
+							<span class="room-status available">●</span>
+						</button>
+						
+						<button class="room-marker" data-room-id="8" data-room-number="266" style="left: 28%; top: 23.5%;">
+							<span class="room-number">266</span>
+							<span class="room-status available">●</span>
+						</button>
+						
+						<button class="room-marker" data-room-id="9" data-room-number="268" style="left: 27.5%; top: 27%;">
+							<span class="room-number">268</span>
+							<span class="room-status available">●</span>
+						</button>
+						
+						<button class="room-marker" data-room-id="10" data-room-number="269" style="left: 46%; top: 26.75%;">
+							<span class="room-number">269</span>
+							<span class="room-status available">●</span>
+						</button>
+						
+						<button class="room-marker" data-room-id="11" data-room-number="270" style="left: 50.25%; top: 26.75%;">
+							<span class="room-number">270</span>
+							<span class="room-status available">●</span>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<!-- Legend -->
+			<div id="map-legend" class="map-legend hidden">
+				<h3>Legend</h3>
+				<div class="legend-items">
+					<div class="legend-item">
+						<span class="room-status available">●</span>
+						<span>Available</span>
+					</div>
+					<div class="legend-item">
+						<span class="room-status unavailable">●</span>
+						<span>Unavailable</span>
+					</div>
+				</div>
+				<p class="legend-note">Click on any room marker to view details</p>
+			</div>
+		</main>
+
+		<!-- Room Tooltip -->
+		<div id="room-tooltip" class="room-tooltip hidden">
+			<div class="tooltip-content">
+				<h4 id="tooltip-name"></h4>
+				<p id="tooltip-capacity"></p>
+				<p id="tooltip-status"></p>
+				<small>Click to view details</small>
+			</div>
+		</div>
+	</body>
+</html>

@@ -215,6 +215,11 @@ function initialize_event_listeners() {
     // Clear filters button
     document.getElementById('clear-filters').addEventListener('click', clear_filters);
     
+    // Map view button
+    document.getElementById('map-view-btn').addEventListener('click', () => {
+        window.location.href = 'map.html';
+    });
+    
     // Retry button for error state
     document.getElementById('retry-button').addEventListener('click', load_and_display_rooms);
 }
