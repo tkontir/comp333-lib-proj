@@ -10,6 +10,7 @@
                 "floor": "2a",
                 "roomNumber": "251"
             },
+            "link": "https://libcal.wesleyan.edu/reserve/olin-group/251",
             "seats": 8,
             "features": [
                 "blackboard"
@@ -24,6 +25,7 @@
                 "floor": "0",
                 "roomNumber": "77"
             },
+            "link": "https://libcal.wesleyan.edu/reserve/science-group/77",
             "seats": 5,
             "features": [
             ],
@@ -37,6 +39,7 @@
                 "floor": "0",
                 "roomNumber": "78"
             },
+            "link": "https://libcal.wesleyan.edu/reserve/science-group/78",
             "seats": 4,
             "features": [
             ],
@@ -50,6 +53,7 @@
                 "floor": "0",
                 "roomNumber": "80"
             },
+            "link": "https://libcal.wesleyan.edu/reserve/science-group/80",
             "seats": 4,
             "features": [
             ],
@@ -63,6 +67,7 @@
                 "floor": "0",
                 "roomNumber": "87"
             },
+            "link": "https://libcal.wesleyan.edu/reserve/science-group/87",
             "seats": 5,
             "features": [
             ],
@@ -76,6 +81,7 @@
                 "floor": "0",
                 "roomNumber": "88"
             },
+            "link": "https://libcal.wesleyan.edu/reserve/science-group/88",
             "seats": 9,
             "features": [
             ],
@@ -89,6 +95,7 @@
                 "floor": "2",
                 "roomNumber": "260"
             },
+            "link": "https://libcal.wesleyan.edu/reserve/science-group/260",
             "seats": 8,
             "features": [
             ],
@@ -102,6 +109,7 @@
                 "floor": "2",
                 "roomNumber": "266"
             },
+            "link": "https://libcal.wesleyan.edu/reserve/science-group/266",
             "seats": 6,
             "features": [
             ],
@@ -115,6 +123,7 @@
                 "floor": "2",
                 "roomNumber": "268"
             },
+            "link": "https://libcal.wesleyan.edu/reserve/science-group/268",
             "seats": 6,
             "features": [
             ],
@@ -128,6 +137,7 @@
                 "floor": "2",
                 "roomNumber": "269"
             },
+            "link": "https://libcal.wesleyan.edu/reserve/science-group/269",
             "seats": 4,
             "features": [
             ],
@@ -141,6 +151,7 @@
                 "floor": "2",
                 "roomNumber": "270"
             },
+            "link": "https://libcal.wesleyan.edu/reserve/science-group/270",
             "seats": 4,
             "features": [
             ],
