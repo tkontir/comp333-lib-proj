@@ -1,6 +1,5 @@
 /* loadRooms() => object
     This function opens the room info JSON and returns the parsed data
-
 */
 async function loadRooms() {
     try {
@@ -15,7 +14,6 @@ async function loadRooms() {
         throw err;
     }
 }
-
 
 /* loadRoomById(id : int) => object|null
     This function parses through the rooms data and returns the room with the matching ID.
@@ -180,10 +178,26 @@ function initialize_modal() {
     const book_button = document.getElementById('book-room-btn');
     const close_button = document.querySelector('.modal-close');
 
-    // Open modal
-    book_button.addEventListener('click', () => {
+    //linking reservation page to the book button
+    // Open modal or redirect to booking link
+    book_button.addEventListener('click', async () => {
         if (!book_button.disabled) {
-            modal.classList.remove('hidden');
+            const room_id = new URLSearchParams(window.location.search).get('id');
+            try {
+                const room = await loadRoomById(room_id);
+                
+                if (room && room.link) {
+                    // Open the LibCal link in a new tab
+                    window.open(room.link, '_blank');
+                } else {
+                    // Fallback to modal if no link is available
+                    modal.classList.remove('hidden');
+                    console.warn('No booking link found for this room');
+                }
+            } catch (error) {
+                console.error('Error opening booking link:', error);
+                modal.classList.remove('hidden');
+            }
         }
     });
 
