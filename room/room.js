@@ -244,3 +244,56 @@ document.addEventListener('DOMContentLoaded', () => {
         show_error_state();
     }
 });
+
+/* fetchAvailability() => null
+    Makes the availability API request
+*/
+async function fetchAvailability() {
+    // const statusElement = document.getElementById('status');
+    // const resultsElement = document.getElementById('results');
+
+    // 1. Update status
+    // statusElement.textContent = 'Fetching data...';
+    // resultsElement.textContent = '';
+
+    // 2. Define the URL for your Vercel Function
+    // Assuming your function file is at /api/external-call.ts or similar
+    // Use a relative path, which is best practice when calling an API 
+    // on the same domain.
+    const apiEndpoint = '/api/post'; // Adjust path if needed
+
+    try {
+        // 3. Use the Fetch API
+        // Although your Vercel function executes a POST request to the external server,
+        // the client-side call to YOUR Vercel function can be a simple GET 
+        // since the payload is hardcoded on the server.
+        const response = await fetch(apiEndpoint, {
+            method: 'GET', // Or 'POST', but 'GET' is sufficient for a trigger
+            // No need for a body since the Vercel function handles the payload
+            // If you wanted to send dates, you would add a 'body' and 'headers' here
+        });
+
+        // 4. Check for response errors (e.g., 404, 500)
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // 5. Parse the JSON response
+        const data = await response.json();
+
+        // 6. Display results
+        console.log('Data fetched successfully!');
+        console.log(JSON.stringify(data, null, 2));
+        // statusElement.textContent = 'Data fetched successfully!';
+        // resultsElement.textContent = JSON.stringify(data, null, 2);
+
+    } catch (error) {
+        // 7. Handle network or API errors
+        // statusElement.textContent = `Error fetching data: ${error.message}`;
+        console.error('Fetch error:', error);
+        // resultsElement.textContent = 'An error occurred. Check the console for details.';
+    }
+}
+
+// Call update function
+fetchAvailability();
