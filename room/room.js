@@ -243,7 +243,80 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('No room id provided in URL');
         show_error_state();
     }
+
+    // Render the availability bar (15-minute intervals across 24 hours)
+    renderAvailabilityBar();
 });
+
+/* renderAvailabilityBar(intervalMinutes = 15, startHour = 0, endHour = 24)
+   Creates clickable segments representing availability. Default creates 96 segments (24h * 4).
+*/
+function renderAvailabilityBar(intervalMinutes = 15, startHour = 0, endHour = 24) {
+    const container = document.getElementById('availability-bar');
+    if (!container) return;
+
+    container.innerHTML = '';
+    const inner = document.createElement('div');
+    inner.className = 'bar-inner';
+    container.appendChild(inner);
+
+    const totalMinutes = (endHour - startHour) * 60;
+    const segments = Math.floor(totalMinutes / intervalMinutes);
+    const segmentsPerHour = 60 / intervalMinutes;
+    const segmentWidth = 20; // px per 15-minute block; adjust for density
+
+    // set inner width explicitly so outer container can scroll predictably
+    inner.style.width = `${segments * segmentWidth}px`;
+
+    for (let i = 0; i < segments; i++) {
+        const div = document.createElement('div');
+        div.className = 'availability-segment state-default';
+        div.dataset.index = String(i);
+        div.style.flex = `0 0 ${segmentWidth}px`;
+
+        const minutes = startHour * 60 + i * intervalMinutes;
+        const hh = Math.floor(minutes / 60);
+        const mm = minutes % 60;
+        const timeLabel = `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
+
+        // Add a visible label only at hour boundaries to reduce clutter
+        if (i % segmentsPerHour === 0) {
+            const label = document.createElement('span');
+            label.className = 'segment-label';
+            label.textContent = timeLabel;
+            div.appendChild(label);
+        }
+
+        // Add title for hover accessibility
+        div.title = timeLabel;
+
+        inner.appendChild(div);
+    }
+}
+
+/* setAvailability(statuses)
+   statuses: array with length equal to number of segments, where each value can be:
+     - 'available' or true  => green
+     - 'unavailable' or false => red
+     - 'default' or null/undefined => gray
+   If array is shorter, only the provided indices are set.
+*/
+function setAvailability(statuses) {
+    const inner = document.querySelector('#availability-bar .bar-inner');
+    if (!inner) return;
+    const segments = Array.from(inner.children);
+    segments.forEach((seg, idx) => {
+        const val = statuses && idx < statuses.length ? statuses[idx] : null;
+        seg.classList.remove('state-default', 'state-available', 'state-unavailable');
+        if (val === 'available' || val === true) {
+            seg.classList.add('state-available');
+        } else if (val === 'unavailable' || val === false) {
+            seg.classList.add('state-unavailable');
+        } else {
+            seg.classList.add('state-default');
+        }
+    });
+}
 
 /* fetchAvailability() => null
     Makes the availability API request
