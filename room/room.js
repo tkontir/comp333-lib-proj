@@ -246,6 +246,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Render the availability bar (15-minute intervals across 24 hours)
     renderAvailabilityBar();
+    // Fetch availability and apply to the rendered bar
+    fetchAvailability();
 });
 
 /* renderAvailabilityBar(intervalMinutes = 15, startHour = 0, endHour = 24)
@@ -259,6 +261,11 @@ function renderAvailabilityBar(intervalMinutes = 15, startHour = 0, endHour = 24
     const inner = document.createElement('div');
     inner.className = 'bar-inner';
     container.appendChild(inner);
+
+    // expose configuration to other functions (used when applying fetched availability)
+    container.dataset.intervalMinutes = String(intervalMinutes);
+    container.dataset.startHour = String(startHour);
+    container.dataset.endHour = String(endHour);
 
     const totalMinutes = (endHour - startHour) * 60;
     const segments = Math.floor(totalMinutes / intervalMinutes);
@@ -354,11 +361,10 @@ async function fetchAvailability() {
         // 5. Parse the JSON response
         const data = await response.json();
 
-        // 6. Display results
+        // 6. Display results and apply to timeline
         console.log('Data fetched successfully!');
         console.log(JSON.stringify(data, null, 2));
-        // statusElement.textContent = 'Data fetched successfully!';
-        // resultsElement.textContent = JSON.stringify(data, null, 2);
+        applyAvailabilityFromData(data);
 
     } catch (error) {
         // 7. Handle network or API errors
@@ -368,5 +374,123 @@ async function fetchAvailability() {
     }
 }
 
-// Call update function
-fetchAvailability();
+/* applyAvailabilityFromData(data)
+   Accepts the raw JSON returned by fetchAvailability and maps it to the timeline.
+   Rule: if a slot object contains a truthy `className` property (or common variants) it is unavailable (red), otherwise available (green).
+*/
+function applyAvailabilityFromData(data) {
+    if (!data) {
+        console.warn('No availability data provided to applyAvailabilityFromData');
+        return;
+    }
+
+    // Heuristics to locate the array of slot objects in the response
+    let slots = null;
+    if (Array.isArray(data)) {
+        slots = data;
+    } else if (data && Array.isArray(data.slots)) {
+        slots = data.slots;
+    } else if (data && Array.isArray(data.data)) {
+        slots = data.data;
+    } else if (data && Array.isArray(data.availability)) {
+        slots = data.availability;
+    }
+
+    if (!slots) {
+        console.warn('Could not find slots array in availability response; expected array at top-level, or in data.slots / data.data / data.availability');
+        return;
+    }
+
+    const inner = document.querySelector('#availability-bar .bar-inner');
+    if (!inner) {
+        console.warn('Availability bar not present in DOM when applying availability');
+        return;
+    }
+
+    const container = document.getElementById('availability-bar');
+    const intervalMinutes = Number(container?.dataset.intervalMinutes || 15);
+    const startHour = Number(container?.dataset.startHour || 0);
+
+    const segmentCount = inner.children.length;
+    const statuses = new Array(segmentCount);
+
+    // compute current time in minutes since midnight to detect past segments
+    const now = new Date();
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+
+    console.debug('applyAvailabilityFromData: slots.length=', slots.length, 'nowMinutes=', nowMinutes, 'intervalMinutes=', intervalMinutes, 'startHour=', startHour);
+
+    // Try to detect if slots include explicit timestamp info (ISO string or similar)
+    function parseSlotStartMinutes(slot) {
+        if (!slot) return null;
+        const keys = ['start', 'startTime', 'time', 'from', 'begin', 'dateTime', 'datetime'];
+        for (const k of keys) {
+            if (slot[k]) {
+                const v = slot[k];
+                // If it's numeric minutes index
+                if (typeof v === 'number') return v;
+                // Try parse as ISO datetime
+                const d = new Date(v);
+                if (!isNaN(d.getTime())) {
+                    return d.getHours() * 60 + d.getMinutes();
+                }
+                // Try to parse hh:mm string
+                if (typeof v === 'string' && /^\d{1,2}:\d{2}$/.test(v)) {
+                    const parts = v.split(':').map(Number);
+                    return parts[0] * 60 + parts[1];
+                }
+            }
+        }
+        return null;
+    }
+
+    // Build a map of slot start minutes => slot for time-based matching
+    const slotMap = new Map();
+    let anySlotHasTime = false;
+    for (let s = 0; s < slots.length; s++) {
+        const m = parseSlotStartMinutes(slots[s]);
+        if (m !== null) {
+            anySlotHasTime = true;
+            // normalize minutes to range 0..1439
+            const mm = ((m % 1440) + 1440) % 1440;
+            slotMap.set(mm, slots[s]);
+        }
+    }
+
+    for (let i = 0; i < segmentCount; i++) {
+        // compute start and end minute for this segment
+        const segStartMinutes = startHour * 60 + i * intervalMinutes;
+        const segEndMinutes = segStartMinutes + intervalMinutes;
+
+        // If the segment end is in the past, keep gray (default)
+        if (segEndMinutes <= nowMinutes) {
+            statuses[i] = 'default';
+            continue;
+        }
+
+        let slot = null;
+
+        if (anySlotHasTime) {
+            // match by start minute (try segStartMinutes normalized)
+            const key = ((segStartMinutes % 1440) + 1440) % 1440;
+            slot = slotMap.get(key) || null;
+        } else if (i < slots.length) {
+            // fall back to index-based mapping if no time data found
+            slot = slots[i];
+        } else {
+            slot = null;
+        }
+
+        // If slot missing from API, keep gray (default)
+        if (!slot) {
+            statuses[i] = 'default';
+            continue;
+        }
+
+        // Otherwise, check occupancy fields and mark unavailable/available
+        const occupied = slot.className || slot.classname || slot.class || slot.booked || slot.occupied;
+        statuses[i] = occupied ? 'unavailable' : 'available';
+    }
+
+    setAvailability(statuses);
+}
