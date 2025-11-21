@@ -394,14 +394,28 @@ async function fetchAvailability() {
     const apiEndpoint = '/api/post'; // Adjust path if needed
 
     try {
-        // 3. Use the Fetch API
-        // Although your Vercel function executes a POST request to the external server,
-        // the client-side call to YOUR Vercel function can be a simple GET 
-        // since the payload is hardcoded on the server.
+        // If a room id is present in the URL, load the room and grab its payload
+        const params = new URLSearchParams(window.location.search);
+        const currentRoomId = params.get('id');
+        let roomPayload = null;
+        if (currentRoomId) {
+            try {
+                const room = await loadRoomById(currentRoomId);
+                if (room && Array.isArray(room.payload)) {
+                    roomPayload = room.payload;
+                }
+            } catch (e) {
+                console.warn('Unable to load room payload for availability request', e);
+            }
+        }
+
+        // 3. Use the Fetch API and POST the room payload to the serverless API
         const response = await fetch(apiEndpoint, {
-            method: 'GET', // Or 'POST', but 'GET' is sufficient for a trigger
-            // No need for a body since the Vercel function handles the payload
-            // If you wanted to send dates, you would add a 'body' and 'headers' here
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ payload: roomPayload })
         });
 
         // 4. Check for response errors (e.g., 404, 500)

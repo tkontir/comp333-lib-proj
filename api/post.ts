@@ -21,11 +21,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const startDate = formatDate(today);
         const endDate = formatDate(tomorrow);
 
+        // Allow client to override which room to query by passing a payload
+        // Payload can be sent as JSON body: { payload: [lid, gid, eid] } or
+        // individual fields { lid, gid, eid } or via query string for GET.
+        let lid = '8176';
+        let gid = '14568';
+        let eid = '107918';
+
+        if (req.method === 'GET') {
+            const q = req.query as Record<string, any>;
+            if (q.lid) lid = String(q.lid);
+            if (q.gid) gid = String(q.gid);
+            if (q.eid) eid = String(q.eid);
+        } else if (req.method === 'POST') {
+            const body = (req as any).body || {};
+            if (Array.isArray(body.payload) && body.payload.length >= 3) {
+                [lid, gid, eid] = body.payload.map((v: any) => String(v));
+            } else {
+                if (body.lid) lid = String(body.lid);
+                if (body.gid) gid = String(body.gid);
+                if (body.eid) eid = String(body.eid);
+            }
+        }
+
         const form = new URLSearchParams({
             // alter these params to switch rooms
-            lid: '8176',
-            gid: '14568',
-            eid: '107918',
+            lid: lid,
+            gid: gid,
+            eid: eid,
 
             seat: '0',
             seatId: '0',

@@ -15,7 +15,8 @@
             "features": [
                 "blackboard"
             ],
-            "description": "On Olin floor 2A Olin floor 2A map: https://www.wesleyan.edu/libr/images/floorplans-maps/olin_floor_2a.jpg"
+            "description": "On Olin floor 2A Olin floor 2A map: https://www.wesleyan.edu/libr/images/floorplans-maps/olin_floor_2a.jpg",
+            "payload": [8176, 14568, 107918]
         },
         {
             "id": "2",
@@ -29,7 +30,8 @@
             "seats": 5,
             "features": [
             ],
-            "description": "On Science Library ground floor"
+            "description": "On Science Library ground floor",
+            "payload": [8535, 15749, 109880]
         },
         {
             "id": "3",
@@ -43,7 +45,8 @@
             "seats": 4,
             "features": [
             ],
-            "description": "On Science Library ground floor"
+            "description": "On Science Library ground floor",
+            "payload": [8535, 15749, 109881]
         },
         {
             "id": "4",
@@ -57,7 +60,8 @@
             "seats": 4,
             "features": [
             ],
-            "description": "On Science Library ground floor"
+            "description": "On Science Library ground floor",
+            "payload": [8535, 15749, 109882]
         },
         {
             "id": "5",
@@ -71,7 +75,8 @@
             "seats": 5,
             "features": [
             ],
-            "description": "On Science Library ground floor"
+            "description": "On Science Library ground floor",
+            "payload": [8535, 15749, 109883]
         },
         {
             "id": "6",
@@ -85,7 +90,8 @@
             "seats": 9,
             "features": [
             ],
-            "description": "On Science Library ground floor"
+            "description": "On Science Library ground floor",
+            "payload": [8535, 15749, 109884]
         },
         {
             "id": "7",
@@ -99,7 +105,8 @@
             "seats": 8,
             "features": [
             ],
-            "description": "On Science Library 2nd floor"
+            "description": "On Science Library 2nd floor",
+            "payload": [8535, 15749, 107927]
         },
         {
             "id": "8",
@@ -113,7 +120,8 @@
             "seats": 6,
             "features": [
             ],
-            "description": "On Science Library 2nd floor."
+            "description": "On Science Library 2nd floor.",
+            "payload": [8535, 15749, 107947]
         },
         {
             "id": "9",
@@ -127,7 +135,8 @@
             "seats": 6,
             "features": [
             ],
-            "description": "On Science Library 2nd floor"
+            "description": "On Science Library 2nd floor",
+            "payload": [8535, 15749, 107950]
         },
         {
             "id": "10",
@@ -141,7 +150,8 @@
             "seats": 4,
             "features": [
             ],
-            "description": "On Science Library 2nd floor"
+            "description": "On Science Library 2nd floor",
+            "payload": [8535, 15749, 109877]
         },
         {
             "id": "11",
@@ -155,7 +165,8 @@
             "seats": 4,
             "features": [
             ],
-            "description": "On Science Library 2nd floor"
+            "description": "On Science Library 2nd floor",
+            "payload": [8535, 15749, 109878]
         }
     ]
 }
