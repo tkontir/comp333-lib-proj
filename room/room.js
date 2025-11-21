@@ -125,10 +125,10 @@ function render_room_details(room) {
 function render_room_features(features) {
     const features_container = document.getElementById('features-list');
     if (!features_container) {
-        return; // Exit if features container doesn't exist in HTML
+        return;
     }
     
-    features_container.innerHTML = ''; // Clear existing features
+    features_container.innerHTML = '';
 
     if (!features || features.length === 0) {
         features_container.innerHTML = '<div class="no-features">No special features listed for this room.</div>';
@@ -295,9 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
         show_error_state();
     }
 
-    // Render the availability bar (15-minute intervals across 24 hours)
     renderAvailabilityBar();
-    // Fetch availability and apply to the rendered bar
     fetchAvailability();
 });
 
@@ -321,9 +319,7 @@ function renderAvailabilityBar(intervalMinutes = 15, startHour = 0, endHour = 24
     const totalMinutes = (endHour - startHour) * 60;
     const segments = Math.floor(totalMinutes / intervalMinutes);
     const segmentsPerHour = 60 / intervalMinutes;
-    const segmentWidth = 20; // px per 15-minute block; adjust for density
-
-    // set inner width explicitly so outer container can scroll predictably
+    const segmentWidth = 20; 
     inner.style.width = `${segments * segmentWidth}px`;
 
     for (let i = 0; i < segments; i++) {
@@ -380,21 +376,9 @@ function setAvailability(statuses) {
     Makes the availability API request
 */
 async function fetchAvailability() {
-    // const statusElement = document.getElementById('status');
-    // const resultsElement = document.getElementById('results');
-
-    // 1. Update status
-    // statusElement.textContent = 'Fetching data...';
-    // resultsElement.textContent = '';
-
-    // 2. Define the URL for your Vercel Function
-    // Assuming your function file is at /api/external-call.ts or similar
-    // Use a relative path, which is best practice when calling an API 
-    // on the same domain.
-    const apiEndpoint = '/api/post'; // Adjust path if needed
+    const apiEndpoint = '/api/post';
 
     try {
-        // If a room id is present in the URL, load the room and grab its payload
         const params = new URLSearchParams(window.location.search);
         const currentRoomId = params.get('id');
         let roomPayload = null;
@@ -409,7 +393,6 @@ async function fetchAvailability() {
             }
         }
 
-        // 3. Use the Fetch API and POST the room payload to the serverless API
         const response = await fetch(apiEndpoint, {
             method: 'POST',
             headers: {
@@ -418,24 +401,18 @@ async function fetchAvailability() {
             body: JSON.stringify({ payload: roomPayload })
         });
 
-        // 4. Check for response errors (e.g., 404, 500)
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        // 5. Parse the JSON response
         const data = await response.json();
 
-        // 6. Display results and apply to timeline
-        console.log('Data fetched successfully!');
+        console.log('Data fetched successfully');
         console.log(JSON.stringify(data, null, 2));
         applyAvailabilityFromData(data);
 
     } catch (error) {
-        // 7. Handle network or API errors
-        // statusElement.textContent = `Error fetching data: ${error.message}`;
         console.error('Fetch error:', error);
-        // resultsElement.textContent = 'An error occurred. Check the console for details.';
     }
 }
 
@@ -449,7 +426,6 @@ function applyAvailabilityFromData(data) {
         return;
     }
 
-    // Heuristics to locate the array of slot objects in the response
     let slots = null;
     if (Array.isArray(data)) {
         slots = data;
@@ -462,13 +438,13 @@ function applyAvailabilityFromData(data) {
     }
 
     if (!slots) {
-        console.warn('Could not find slots array in availability response; expected array at top-level, or in data.slots / data.data / data.availability');
+        console.warn('Couldnt find slots array in availability response');
         return;
     }
 
     const inner = document.querySelector('#availability-bar .bar-inner');
     if (!inner) {
-        console.warn('Availability bar not present in DOM when applying availability');
+        console.warn('Availability bar not present');
         return;
     }
 
@@ -479,13 +455,11 @@ function applyAvailabilityFromData(data) {
     const segmentCount = inner.children.length;
     const statuses = new Array(segmentCount);
 
-    // compute current time in minutes since midnight to detect past segments
     const now = new Date();
     const nowMinutes = now.getHours() * 60 + now.getMinutes();
 
     console.debug('applyAvailabilityFromData: slots.length=', slots.length, 'nowMinutes=', nowMinutes, 'intervalMinutes=', intervalMinutes, 'startHour=', startHour);
 
-    // Try to detect if slots include explicit timestamp info (ISO string or similar)
     function parseSlotStartMinutes(slot) {
         if (!slot) return null;
         const keys = ['start', 'startTime', 'time', 'from', 'begin', 'dateTime', 'datetime'];
@@ -509,7 +483,6 @@ function applyAvailabilityFromData(data) {
         return null;
     }
 
-    // Build a map of slot start minutes => slot for time-based matching
     const slotMap = new Map();
     let anySlotHasTime = false;
     for (let s = 0; s < slots.length; s++) {
@@ -527,7 +500,7 @@ function applyAvailabilityFromData(data) {
         const segStartMinutes = startHour * 60 + i * intervalMinutes;
         const segEndMinutes = segStartMinutes + intervalMinutes;
 
-        // If the segment end is in the past, keep gray (default)
+        // If the segment end is in the past, keep gray
         if (segEndMinutes <= nowMinutes) {
             statuses[i] = 'default';
             continue;
@@ -536,7 +509,7 @@ function applyAvailabilityFromData(data) {
         let slot = null;
 
         if (anySlotHasTime) {
-            // match by start minute (try segStartMinutes normalized)
+            // match by start minute 
             const key = ((segStartMinutes % 1440) + 1440) % 1440;
             slot = slotMap.get(key) || null;
         } else if (i < slots.length) {
@@ -546,13 +519,12 @@ function applyAvailabilityFromData(data) {
             slot = null;
         }
 
-        // If slot missing from API, keep gray (default)
+        // If slot missing from API, keep gray
         if (!slot) {
             statuses[i] = 'default';
             continue;
         }
 
-        // Otherwise, check occupancy fields and mark unavailable/available
         const occupied = slot.className || slot.classname || slot.class || slot.booked || slot.occupied;
         statuses[i] = occupied ? 'unavailable' : 'available';
     }
