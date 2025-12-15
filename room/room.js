@@ -279,6 +279,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(room => {
                 if (room) {
                     console.log('Loaded room:', room);
+                    let itemId = room.payload[2];
+                    console.log('Item ID:', itemId);
                     render_room_details(room);
                     show_room_content();
                 } else {
@@ -382,11 +384,14 @@ async function fetchAvailability() {
         const params = new URLSearchParams(window.location.search);
         const currentRoomId = params.get('id');
         let roomPayload = null;
+        let currentRoomItemId = null;
         if (currentRoomId) {
             try {
                 const room = await loadRoomById(currentRoomId);
                 if (room && Array.isArray(room.payload)) {
                     roomPayload = room.payload;
+                    // Extract the itemId (third element in payload array)
+                    currentRoomItemId = room.payload[2];
                 }
             } catch (e) {
                 console.warn('Unable to load room payload for availability request', e);
@@ -409,7 +414,15 @@ async function fetchAvailability() {
 
         console.log('Data fetched successfully');
         console.log(JSON.stringify(data, null, 2));
-        applyAvailabilityFromData(data);
+        
+        // Filter data to only include entries matching the current room's itemId
+        let filteredData = data;
+        if (currentRoomItemId !== null && Array.isArray(data)) {
+            filteredData = data.filter(item => item.itemId === currentRoomItemId);
+            console.log(`Filtered to ${filteredData.length} items matching itemId ${currentRoomItemId}`);
+        }
+        
+        applyAvailabilityFromData(filteredData);
 
     } catch (error) {
         console.error('Fetch error:', error);
