@@ -390,7 +390,7 @@ async function fetchAvailability() {
                     roomPayload = room.payload;
                     // Extract the itemId (third element in payload array)
                     currentRoomItemId = room.payload[2];
-                    console.log('Using room payload for availability request:', roomPayload);
+                    console.log('Using room id:', currentRoomItemId);
                 }
             } catch (e) {
                 console.warn('Unable to load room payload for availability request', e);
@@ -412,7 +412,7 @@ async function fetchAvailability() {
         const data = await response.json();
 
         console.log('Data fetched successfully');
-        console.log(JSON.stringify(data, null, 2));
+        // console.log(JSON.stringify(data, null, 2));
         
         // Filter data to only include entries matching the current room's itemId
         let filteredData = data;
