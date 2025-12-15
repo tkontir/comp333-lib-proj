@@ -414,12 +414,34 @@ async function fetchAvailability() {
         console.log('Data fetched successfully');
         // console.log(JSON.stringify(data, null, 2));
         
-        // Filter data to only include entries matching the current room's itemId
+        // Extract array from data object
+        let slots = null;
+        if (Array.isArray(data)) {
+            slots = data;
+        } else if (data && Array.isArray(data.slots)) {
+            slots = data.slots;
+        } else if (data && Array.isArray(data.data)) {
+            slots = data.data;
+        } else if (data && Array.isArray(data.availability)) {
+            slots = data.availability;
+        }
+        
+        // Filter slots to only include entries matching the current room's itemId
         let filteredData = data;
-        console.log(typeof(data));
-        if (currentRoomItemId !== null) {
-            filteredData = data.filter(item => item.itemId === currentRoomItemId);
-            console.log(`Filtered to ${filteredData.length} items matching itemId ${currentRoomItemId}`);
+        if (currentRoomItemId !== null && slots && Array.isArray(slots)) {
+            const filteredSlots = slots.filter(item => item.itemId === currentRoomItemId);
+            console.log(`Filtered to ${filteredSlots.length} items matching itemId ${currentRoomItemId}`);
+            
+            // Reconstruct the data structure with filtered slots
+            if (Array.isArray(data)) {
+                filteredData = filteredSlots;
+            } else if (data.slots) {
+                filteredData = { ...data, slots: filteredSlots };
+            } else if (data.data) {
+                filteredData = { ...data, data: filteredSlots };
+            } else if (data.availability) {
+                filteredData = { ...data, availability: filteredSlots };
+            }
         }
         
         applyAvailabilityFromData(filteredData);
