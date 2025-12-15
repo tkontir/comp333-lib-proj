@@ -279,8 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(room => {
                 if (room) {
                     console.log('Loaded room:', room);
-                    let itemId = room.payload[2];
-                    console.log('Item ID:', itemId);
                     render_room_details(room);
                     show_room_content();
                 } else {
@@ -392,6 +390,7 @@ async function fetchAvailability() {
                     roomPayload = room.payload;
                     // Extract the itemId (third element in payload array)
                     currentRoomItemId = room.payload[2];
+                    console.log('Using room payload for availability request:', roomPayload);
                 }
             } catch (e) {
                 console.warn('Unable to load room payload for availability request', e);
