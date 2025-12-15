@@ -42,23 +42,11 @@ function login () {
   console.log("Pass: " + pass);
 
   // navigate to home page
-  window.location.href = "home/home.html";
-}
-
-/* goto_rooms () => void
-   Function to navigate to the rooms listing page.
-*/
-function goto_rooms () {
-  console.log("Navigating to rooms page");
   window.location.href = "rooms/rooms.html";
 }
-
 
 // attach event listeners when DOM is ready
 document.addEventListener('DOMContentLoaded', function () {
   const login_button = document.getElementById('login_button');
   login_button.addEventListener('click', login);
-
-  const rooms_button = document.getElementById('rooms_button');
-  rooms_button.addEventListener('click', goto_rooms);
 });
