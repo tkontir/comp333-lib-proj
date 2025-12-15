@@ -416,7 +416,8 @@ async function fetchAvailability() {
         
         // Filter data to only include entries matching the current room's itemId
         let filteredData = data;
-        if (currentRoomItemId !== null && Array.isArray(data)) {
+        console.log(typeof(data));
+        if (currentRoomItemId !== null) {
             filteredData = data.filter(item => item.itemId === currentRoomItemId);
             console.log(`Filtered to ${filteredData.length} items matching itemId ${currentRoomItemId}`);
         }
