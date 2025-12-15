@@ -444,6 +444,7 @@ async function fetchAvailability() {
             }
         }
         
+        console.log('Filtered data:', JSON.stringify(filteredData, null, 2));
         applyAvailabilityFromData(filteredData);
 
     } catch (error) {
