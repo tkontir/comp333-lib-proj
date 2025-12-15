@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadRoomById(room_id)
             .then(room => {
                 if (room) {
-                    console.log('Loaded room:', room);
+                    // console.log('Loaded room:', room);
                     render_room_details(room);
                     show_room_content();
                 } else {
@@ -390,7 +390,6 @@ async function fetchAvailability() {
                     roomPayload = room.payload;
                     // Extract the itemId (third element in payload array)
                     currentRoomItemId = room.payload[2];
-                    console.log('Using room id:', currentRoomItemId);
                 }
             } catch (e) {
                 console.warn('Unable to load room payload for availability request', e);
@@ -411,7 +410,8 @@ async function fetchAvailability() {
 
         const data = await response.json();
 
-        console.log('Data fetched successfully');
+        // Uncomment to see raw fetched data
+        // console.log('Data fetched successfully');
         // console.log(JSON.stringify(data, null, 2));
         
         // Extract array from data object
@@ -430,7 +430,6 @@ async function fetchAvailability() {
         let filteredData = data;
         if (currentRoomItemId !== null && slots && Array.isArray(slots)) {
             const filteredSlots = slots.filter(item => item.itemId === currentRoomItemId);
-            console.log(`Filtered to ${filteredSlots.length} items matching itemId ${currentRoomItemId}`);
             
             // Reconstruct the data structure with filtered slots
             if (Array.isArray(data)) {
@@ -444,7 +443,8 @@ async function fetchAvailability() {
             }
         }
         
-        console.log('Filtered data:', JSON.stringify(filteredData, null, 2));
+        // Uncomment to show the filtered room times 
+        // console.log('Filtered data:', JSON.stringify(filteredData, null, 2));
         applyAvailabilityFromData(filteredData);
 
     } catch (error) {
