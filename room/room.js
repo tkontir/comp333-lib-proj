@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadRoomById(room_id)
             .then(room => {
                 if (room) {
-                    console.log('Loaded room:', room);
+                    // console.log('Loaded room:', room);
                     render_room_details(room);
                     show_room_content();
                 } else {
@@ -382,11 +382,14 @@ async function fetchAvailability() {
         const params = new URLSearchParams(window.location.search);
         const currentRoomId = params.get('id');
         let roomPayload = null;
+        let currentRoomItemId = null;
         if (currentRoomId) {
             try {
                 const room = await loadRoomById(currentRoomId);
                 if (room && Array.isArray(room.payload)) {
                     roomPayload = room.payload;
+                    // Extract the itemId (third element in payload array)
+                    currentRoomItemId = room.payload[2];
                 }
             } catch (e) {
                 console.warn('Unable to load room payload for availability request', e);
@@ -407,9 +410,42 @@ async function fetchAvailability() {
 
         const data = await response.json();
 
-        console.log('Data fetched successfully');
-        console.log(JSON.stringify(data, null, 2));
-        applyAvailabilityFromData(data);
+        // Uncomment to see raw fetched data
+        // console.log('Data fetched successfully');
+        // console.log(JSON.stringify(data, null, 2));
+        
+        // Extract array from data object
+        let slots = null;
+        if (Array.isArray(data)) {
+            slots = data;
+        } else if (data && Array.isArray(data.slots)) {
+            slots = data.slots;
+        } else if (data && Array.isArray(data.data)) {
+            slots = data.data;
+        } else if (data && Array.isArray(data.availability)) {
+            slots = data.availability;
+        }
+        
+        // Filter slots to only include entries matching the current room's itemId
+        let filteredData = data;
+        if (currentRoomItemId !== null && slots && Array.isArray(slots)) {
+            const filteredSlots = slots.filter(item => item.itemId === currentRoomItemId);
+            
+            // Reconstruct the data structure with filtered slots
+            if (Array.isArray(data)) {
+                filteredData = filteredSlots;
+            } else if (data.slots) {
+                filteredData = { ...data, slots: filteredSlots };
+            } else if (data.data) {
+                filteredData = { ...data, data: filteredSlots };
+            } else if (data.availability) {
+                filteredData = { ...data, availability: filteredSlots };
+            }
+        }
+        
+        // Uncomment to show the filtered room times 
+        // console.log('Filtered data:', JSON.stringify(filteredData, null, 2));
+        applyAvailabilityFromData(filteredData);
 
     } catch (error) {
         console.error('Fetch error:', error);
