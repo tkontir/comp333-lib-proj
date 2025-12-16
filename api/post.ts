@@ -12,10 +12,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     try {
-        // Compute today's date and use it as `start`. Also compute `end` as tomorrow.
+        // Compute today's date in EST timezone and use it as `start`. Also compute `end` as tomorrow.
         const pad2 = (n: number) => String(n).padStart(2, '0');
+        
+        // Get current date/time in EST timezone
+        const now = new Date();
+        const estDateString = now.toLocaleString('en-US', { timeZone: 'America/New_York' });
+        const today = new Date(estDateString);
+        
         const formatDate = (d: Date) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
-        const today = new Date();
         const tomorrow = new Date(today);
         tomorrow.setDate(tomorrow.getDate() + 1);
         const startDate = formatDate(today);
