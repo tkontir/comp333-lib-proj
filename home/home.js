@@ -1,9 +1,9 @@
 let rooms = null;
 
-/* loadRoomsModuleOrFetch () => object
-    This function retreives and returns all the rooms specified in the provided JSO
+/* load_rooms_module_or_fetch () => object
+    This function retrieves and returns all the rooms specified in the provided JSON
 */
-async function loadRoomsModuleOrFetch() {
+async function load_rooms_module_or_fetch() {
     try {
         const mod = await import('../rooms.json', { assert: { type: 'json' } });
         rooms = mod.default || mod;
@@ -32,30 +32,30 @@ async function loadRoomsModuleOrFetch() {
 /* DOM reference constants
     This is used to update the elements in the HTML file
 */
-const filterBySelect = document.getElementById('filterBy');
-const libraryFilterView = document.getElementById('libraryFilterView');
-const availabilityFilterView = document.getElementById('availabilityFilterView');
+const filter_by_select = document.getElementById('filterBy');
+const library_filter_view = document.getElementById('libraryFilterView');
+const availability_filter_view = document.getElementById('availabilityFilterView');
 
-const librarySelect = document.getElementById('library');
-const floorSelect = document.getElementById('floor');
-const roomSelect = document.getElementById('room');
-const floorSection = document.getElementById('floorSection');
-const roomSection = document.getElementById('roomSection');
+const library_select = document.getElementById('library');
+const floor_select = document.getElementById('floor');
+const room_select = document.getElementById('room');
+const floor_section = document.getElementById('floorSection');
+const room_section = document.getElementById('roomSection');
 
-const availableRoomSelect = document.getElementById('availableRoom');
-const reserveBtn = document.getElementById('reserveBtn');
+const available_room_select = document.getElementById('availableRoom');
+const reserve_btn = document.getElementById('reserveBtn');
 
 
-/* initializeReservationSystem() => null
-    This functiuon calls the necessary functions for the page to run
+/* initialize_reservation_system() => null
+    This function calls the necessary functions for the page to run
 */ 
-function initializeReservationSystem() {
-    populateLibraries();
-    setupFilterByChangeListener();
-    setupLibrarySelectionListener();
-    setupFloorSelectionListener();
-    setupRoomSelectionListener();
-    setupReservationButtonListener();
+function initialize_reservation_system() {
+    populate_libraries();
+    setup_filter_by_change_listener();
+    setup_library_selection_listener();
+    setup_floor_selection_listener();
+    setup_room_selection_listener();
+    setup_reservation_button_listener();
 }
 
 // Initialize modern animations and enhanced functionality
@@ -66,20 +66,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Initialize stat counter animation
-    initializeStatCounters();
+    initialize_stat_counters();
     
     // Initialize ripple effects on buttons
-    initializeRippleEffects();
+    initialize_ripple_effects();
     
     // Load rooms and set up the system
-    initializeReservationSystem();
+    initialize_reservation_system();
 });
 
-// Animate stat counters
-function initializeStatCounters() {
-    const statNumbers = document.querySelectorAll('.stat-number[data-target]');
+/* initialize_stat_counters() => null
+    Animate stat counters with counting animation
+*/
+function initialize_stat_counters() {
+    const stat_numbers = document.querySelectorAll('.stat-number[data-target]');
     
-    const animateCounter = (element, target) => {
+    const animate_counter = (element, target) => {
         let count = 0;
         const increment = target / 100;
         const timer = setInterval(() => {
@@ -97,17 +99,19 @@ function initializeStatCounters() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const target = parseInt(entry.target.getAttribute('data-target'));
-                animateCounter(entry.target, target);
+                animate_counter(entry.target, target);
                 observer.unobserve(entry.target);
             }
         });
     }, { threshold: 0.5 });
     
-    statNumbers.forEach(stat => observer.observe(stat));
+    stat_numbers.forEach(stat => observer.observe(stat));
 }
 
-// Add ripple effect to buttons
-function initializeRippleEffects() {
+/* initialize_ripple_effects() => null
+    Add ripple effect to buttons
+*/
+function initialize_ripple_effects() {
     const buttons = document.querySelectorAll('.btn');
     buttons.forEach(button => {
         button.addEventListener('click', function(e) {
@@ -134,10 +138,10 @@ function initializeRippleEffects() {
 // Initialize the function when the page loads
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        await loadRoomsModuleOrFetch();
+        await load_rooms_module_or_fetch();
     } catch (err) {
         // If loading rooms fails, still initialize so UI shows an error state
         console.error('Could not load rooms data during initialization:', err);
     }
-    initializeReservationSystem();
+    initialize_reservation_system();
 });
