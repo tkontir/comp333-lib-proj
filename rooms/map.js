@@ -5,17 +5,23 @@
  * Returns a Promise that resolves to the parsed JSON.
  */
 async function load_rooms() {
-    try {
-        const response = await fetch('../rooms.json');
-        if (!response.ok) {
-            throw new Error(`Failed to fetch rooms.json (status ${response.status})`);
+    const paths = ['../rooms.json', './rooms.json', '/rooms.json'];
+    let lastError = null;
+    for (const path of paths) {
+        try {
+            const response = await fetch(path, { cache: 'no-cache' });
+            if (!response.ok) {
+                throw new Error(`Failed to fetch rooms.json (status ${response.status})`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.warn(`Error loading rooms.json from ${path}:`, error);
+            lastError = error;
         }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error loading rooms.json:', error);
-        throw error;
     }
+    console.error('Error loading rooms.json:', lastError);
+    throw lastError || new Error('rooms.json could not be loaded');
 }
 
 /**

@@ -3,92 +3,209 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Library Room Details</title>
-		<link rel="stylesheet" href="room_gui.css">
+		<title>Room Details | Wesleyan Library</title>
+		<link rel="stylesheet" href="../styles/modern.css">
+		<link rel="stylesheet" href="room_gui_new.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	</head>
 	<body>
-		<script src="room.js" defer></script>
-		
 		<!-- Navigation -->
-		<nav class="navbar">
-			<div class="nav-container">
-				<a href="../rooms/rooms.html" class="nav-link">← Back to Rooms</a>
-				<h1 class="nav-title">Wesleyan University</h1>
+		<nav class="main-nav">
+			<div class="nav-container">			<div class="nav-brand">
+				<img src="../wesleyan_logo.png" alt="Wesleyan Logo" class="nav-logo">
+				<span class="logo-text">Wesleyan</span>
+				<span class="logo-accent">University</span>
+			</div>
+				<div class="nav-actions">
+					<a href="../rooms/rooms.html" class="nav-btn">
+						<svg class="btn-icon" viewBox="0 0 24 24" fill="none">
+							<path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						Back to Rooms
+					</a>
+					<a href="../index.html" class="nav-btn primary">Home</a>
+				</div>
 			</div>
 		</nav>
 
 		<!-- Loading State -->
-		<div id="loading-state" class="loading-container">
+		<div id="loading-state" class="loading-container fade-up">
 			<div class="loading-spinner"></div>
 			<p>Loading room details...</p>
 		</div>
 
 		<!-- Error State -->
-		<div id="error-state" class="error-container hidden">
+		<div id="error-state" class="error-container hidden fade-up">
 			<div class="error-message">
 				<h2>Room Not Found</h2>
 				<p>The requested room could not be found or there was an error loading the room data.</p>
-				<a href="../rooms/rooms.html" class="error-link">Return to Room List</a>
+				<a href="../rooms/rooms.html" class="btn btn-primary">Return to Room List</a>
 			</div>
 		</div>
+
+		<!-- Room Hero Section -->
+		<section class="room-hero">
+			<div class="hero-bg">
+				<div class="hero-gradient"></div>
+				<div class="floating-shapes">
+					<div class="shape shape-1"></div>
+					<div class="shape shape-2"></div>
+					<div class="shape shape-3"></div>
+				</div>
+			</div>
+		</section>
 
 		<!-- Room Content -->
 		<div id="room-container" class="container hidden">
-			<div class="room-header">
-				<div class="room-image-container">
+			<div class="room-header fade-up">
+				<div class="room-image-container scale-up delay-1">
 					<img id="room-image" src="" alt="Room Image" class="room-image" />
 					<div class="room-image-placeholder">
-						<p>Insert Image Here</p>
+						<div class="placeholder-icon">
+							<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M21 19V5C21 3.89543 20.1046 3 19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19Z" stroke="currentColor" stroke-width="2"/>
+								<path d="M21 15L16 10L5 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M9 9H9.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>
+						<p>Room Image Loading...</p>
 					</div>
-				</div>
-				<div class="room-info">
-					<h1 id="room-name" class="room-title"></h1>
-					<div class="room-details">
-						<div class="detail-item">
-							<span class="detail-label">Building:</span>
-							<span id="room-building" class="detail-value"></span>
-						</div>
-						<div class="detail-item">
-							<span class="detail-label">Floor:</span>
-							<span id="room-floor" class="detail-value"></span>
-						</div>
-						<div class="detail-item">
-							<span class="detail-label">Room Number:</span>
-							<span id="room-number" class="detail-value"></span>
-						</div>
-						<div class="detail-item">
-							<span class="detail-label">Capacity:</span>
-							<span id="room-capacity" class="detail-value"></span>
-						</div>
-						<div class="detail-item availability-item">
-							<span class="detail-label">Status:</span>
-							<span id="room-availability" class="detail-value availability-badge"></span>
+					<div class="image-overlay">
+						<div class="availability-badge" id="room-status-badge">
+							<span class="status-dot"></span>
+							<span class="status-text">Available</span>
 						</div>
 					</div>
 				</div>
+				
+				<div class="room-info fade-up delay-2">
+					<h1 id="room-name" class="room-title text-reveal">Study Room Loading...</h1>
+					<div class="room-details stagger-children">
+						<div class="detail-item">
+							<div class="detail-icon">
+								<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M3 21H21M5 21V7L12 3L19 7V21M9 9H15M9 12H15M9 15H15" stroke="currentColor" stroke-width="2"/>
+								</svg>
+							</div>
+							<div class="detail-content">
+								<span class="detail-label">Building</span>
+								<span id="room-building" class="detail-value">—</span>
+							</div>
+						</div>
+						
+						<div class="detail-item">
+							<div class="detail-icon">
+								<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M7 3V21M17 3V21M3 7H21M3 17H21" stroke="currentColor" stroke-width="2"/>
+								</svg>
+							</div>
+							<div class="detail-content">
+								<span class="detail-label">Floor</span>
+								<span id="room-floor" class="detail-value">—</span>
+							</div>
+						</div>
+						
+						<div class="detail-item">
+							<div class="detail-icon">
+								<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M9 11H15M9 15H15M21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5Z" stroke="currentColor" stroke-width="2"/>
+								</svg>
+							</div>
+							<div class="detail-content">
+								<span class="detail-label">Room Number</span>
+								<span id="room-number" class="detail-value">—</span>
+							</div>
+						</div>
+						
+						<div class="detail-item">
+							<div class="detail-icon">
+								<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H6C4.93913 15 3.92172 15.4214 3.17157 16.1716C2.42143 16.9217 2 17.9391 2 19V21M20 8V14M23 11H17M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z" stroke="currentColor" stroke-width="2"/>
+								</svg>
+							</div>
+							<div class="detail-content">
+								<span class="detail-label">Capacity</span>
+								<span id="room-capacity" class="detail-value">—</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="room-features fade-up delay-3">
+						<h3>Features</h3>
+						<div class="features-grid" id="room-features-list">
+							<!-- Features will be dynamically loaded -->
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="room-description">
-				<h2>Room Description</h2>
-				<p id="room-description-text"></p>
+			<div class="room-info-section fade-up delay-4">
+				<div class="info-container combined-info">
+					<div class="section-content">
+						<h2 class="section-title">About This Room</h2>
+						<p id="room-description-text" class="room-description-text">Loading room description...</p>
+					</div>
+
+					<div class="availability-content">
+						<h2 class="section-title">Room Availability</h2>
+						<div class="availability-container">
+							<!-- Scrollable 24-hour timeline -->
+							<div class="availability-bar-wrapper">
+								<div class="availability-bar" id="availability-bar"></div>
+							</div>
+							
+							<div class="availability-legend">
+								<div class="legend-item">
+									<div class="legend-color available"></div>
+									<span>Available</span>
+								</div>
+								<div class="legend-item">
+									<div class="legend-color occupied"></div>
+									<span>Reserved/Unavailable</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="actions-content">
+						<button id="book-room-btn" class="btn btn-primary glow magnetic">
+							<span>Book This Room</span>
+							<svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</button>
+					</div>
+				</div>
 			</div>
 
-			<div class="room-actions">
-				<button id="book-room-btn" class="primary-btn">Book This Room</button>
-				<button id="check-availability-btn" class="secondary-btn">Check Availability</button>
-			</div>
-
-			<!-- Booking Modal (placeholder for future functionality) -->
-			<div id="booking-modal" class="modal hidden">
+			<!-- Enhanced Booking Modal -->
+			<div id="booking-modal" class="modal">
+				<div class="modal-backdrop"></div>
 				<div class="modal-content">
-					<span class="modal-close">&times;</span>
-					<h3>Add more stuff here</h3>
-					<p>Work in Progress</p>
+					<div class="modal-header">
+						<h3>Book Room</h3>
+						<button class="modal-close" id="modal-close-btn">
+							<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>Booking functionality coming soon! This feature will allow you to:</p>
+						<ul>
+							<li>Select your preferred time slot</li>
+							<li>Specify the duration of your booking</li>
+							<li>Add any special requirements</li>
+							<li>Receive confirmation via email</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<h1>Availability</h1>
-		<div id="availability-bar" class="availability-bar" aria-label="Room availability timeline"></div>
+		<script src="room.js" defer></script>
+		<script src="../scripts/animations.js" defer></script>
 	</body>
 </html>
