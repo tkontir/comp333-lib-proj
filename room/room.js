@@ -444,7 +444,7 @@ async function fetchAvailability() {
         }
         
         // Uncomment to show the filtered room times 
-        console.log('Filtered data:', JSON.stringify(filteredData, null, 2));
+        // console.log('Filtered data:', JSON.stringify(filteredData, null, 2));
         applyAvailabilityFromData(filteredData);
 
     } catch (error) {
