@@ -411,8 +411,8 @@ async function fetchAvailability() {
         const data = await response.json();
 
         // Uncomment to see raw fetched data
-        console.log('Data fetched successfully');
-        console.log(JSON.stringify(data, null, 2));
+        // console.log('Data fetched successfully');
+        // console.log(JSON.stringify(data, null, 2));
         
         // Extract array from data object
         let slots = null;

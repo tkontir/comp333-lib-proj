@@ -20,6 +20,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         tomorrow.setDate(tomorrow.getDate() + 1);
         const startDate = formatDate(today);
         const endDate = formatDate(tomorrow);
+        console.log(`Using start date: ${startDate}, end date: ${endDate}`);
 
         // Allow client to override which room to query by passing a payload
         // Payload can be sent as JSON body: { payload: [lid, gid, eid] } or
