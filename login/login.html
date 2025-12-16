@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Wesleyan Library</title>
+    <link rel="stylesheet" href="../styles/modern.css">
+    <link rel="stylesheet" href="login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="../wesleyan_logo.png" alt="Wesleyan Logo" class="nav-logo">
+                <span class="logo-text">Wesleyan</span>
+                <span class="logo-accent">University</span>
+            </div>
+            <div class="nav-actions">
+                <a href="../index.html" class="nav-btn">← Home</a>
+                <a href="../rooms/rooms.html" class="nav-btn">Browse Rooms</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>Welcome Back</h1>
+                <p>Sign in to book rooms and access your reservations</p>
+            </div>
+
+            <form id="login_form" class="login-form">
+                <div class="form-message" id="form_message"></div>
+                
+                <div class="form-group">
+                    <label for="username_input">Email or Username</label>
+                    <input 
+                        type="text" 
+                        id="username_input" 
+                        placeholder="Enter your email or username"
+                        autocomplete="username"
+                    >
+                    <div class="form-help" id="username_help"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password_input">Password</label>
+                    <input 
+                        type="password" 
+                        id="password_input" 
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                    >
+                    <div class="form-help" id="password_help"></div>
+                </div>
+
+                <button type="button" id="login_button" class="btn btn-primary login-btn">
+                    <span>Sign In</span>
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                
+                <button type="button" id="guest_button" class="btn btn-outline guest-btn">
+                    <span>Continue as Guest</span>
+                </button>
+
+                <div class="signup-login-link">
+                    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+                </div>
+
+                <div class="demo-credentials">
+                    <h4>Demo Credentials</h4>
+                    <div class="credentials-grid">
+                        <div class="credential-item">
+                            <strong>Admin:</strong>
+                            <span>admin@wesleyan.edu / admin123</span>
+                        </div>
+                        <div class="credential-item">
+                            <strong>Student:</strong>
+                            <span>student1@wesleyan.edu / password123</span>
+                        </div>
+                        <div class="credential-item">
+                            <strong>Faculty:</strong>
+                            <span>faculty1@wesleyan.edu / faculty456</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+    <script src="../scripts/animations.js"></script>
+</body>
+</html>

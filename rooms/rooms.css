@@ -1,51 +1,36 @@
-/* Styling for the rooms listing page */
+/* Modern Rooms Listing Page Styles */
 
-/* Reset and Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* Import modern design system styles */
+@import '../styles/modern.css';
 
+/* Page-specific enhancements */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    background-color: #f8f9fa;
-    color: #333;
+    background: var(--gradient-bg);
     min-height: 100vh;
 }
 
-/* Navigation */
-.navbar {
-    background-color: #6a0104;
-    color: white;
-    padding: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* Rooms-specific animations */
+@keyframes roomCardSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.room-card {
+    animation: roomCardSlideUp 0.6s ease-out forwards;
 }
 
-.nav-link {
-    color: #ecf0f1;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
+.room-card:nth-child(odd) {
+    animation-delay: 0.1s;
 }
 
-.nav-link:hover {
-    color: #3498db;
-}
-
-.nav-title {
-    font-size: 1.5rem;
-    font-weight: 600;
+.room-card:nth-child(even) {
+    animation-delay: 0.2s;
 }
 
 /* Main Content */
@@ -158,18 +143,32 @@ body {
 }
 
 .clear-filters-btn {
-    padding: 0.75rem 1.5rem;
+    padding: 0.5rem 1rem;
+    height: 44px;
     background-color: #95a5a6;
     color: white;
     border: none;
     border-radius: 6px;
     font-weight: 600;
+    font-size: 0.875rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    box-sizing: border-box;
 }
 
 .clear-filters-btn:hover {
     background-color: #7f8c8d;
+}
+
+.clear-filters-btn .btn-icon {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2;
 }
 
 /* Loading and Error States */

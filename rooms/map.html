@@ -4,20 +4,27 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Science Library Floor Plan - Wesleyan University</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="map.css">
 	</head>
 	<body>
 		<script src="map.js" defer></script>
 		
 		<!-- Navigation -->
-		<nav class="navbar">
-			<div class="nav-container">
-				<a href="rooms.html" class="nav-link">← Back to Room List</a>
-				<h1 class="nav-title">Science Library Floor Plan</h1>
-				<div class="nav-actions">
-					<button id="list-view-btn" class="list-view-button">
-						List View
-					</button>
+		<nav class="map-main-nav">
+			<div class="map-nav-container">
+				<div class="map-nav-brand">
+					<img src="../wesleyan_logo.png" alt="Wesleyan Logo" class="map-nav-logo">
+					<div class="map-nav-text">
+						<span class="map-logo-text">Wesleyan</span>
+						<span class="map-logo-accent">University</span>
+					</div>
+				</div>
+				<div class="map-nav-actions">
+					<a href="../index.html" class="map-nav-btn">Home</a>
+					<button id="list-view-btn" class="map-nav-btn map-nav-primary">List View</button>
 				</div>
 			</div>
 		</nav>

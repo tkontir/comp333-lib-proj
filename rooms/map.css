@@ -8,7 +8,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', 'Space Grotesk', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     background-color: #f8f9fa;
     color: #333;
@@ -16,11 +16,89 @@ body {
 }
 
 /* Navigation */
+.map-main-nav {
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.map-nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.map-nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.map-nav-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.map-nav-text {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-family: 'Space Grotesk', 'Inter', 'Segoe UI', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.map-logo-text { color: #b91c1c; } /* Wesleyan */
+.map-logo-accent { color: #0f172a; } /* University */
+
+.map-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.map-nav-btn {
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: #0f172a;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.map-nav-btn:hover {
+    transform: translateY(-1px);
+    background-color: #f1f5f9;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.map-nav-primary {
+    background: linear-gradient(135deg, #b91c1c, #ef4444);
+    color: #fff;
+    border: none;
+}
+
+.map-nav-primary:hover {
+    box-shadow: 0 12px 32px rgba(185, 28, 28, 0.25);
+}
+
+/* Legacy navbar styles (kept for reference, unused) */
 .navbar {
     background-color: #6a0104;
     color: white;
     padding: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px var(--shadow);
 }
 
 .nav-container {
@@ -33,7 +111,7 @@ body {
 }
 
 .nav-link {
-    color: #ecf0f1;
+    color: var(--nav-text);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
@@ -53,6 +131,7 @@ body {
 .nav-actions {
     display: flex;
     align-items: center;
+    gap: 1rem;
 }
 
 .list-view-button {
@@ -94,7 +173,7 @@ body {
 
 .map-description {
     font-size: 1.1rem;
-    color: #666;
+    color: var(--text-secondary);
 }
 
 /* Loading and Error States */
@@ -132,9 +211,9 @@ body {
 .error-message {
     text-align: center;
     padding: 2rem;
-    background-color: white;
+    background-color: var(--bg-secondary);
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px var(--shadow);
     max-width: 400px;
 }
 
@@ -144,7 +223,7 @@ body {
 }
 
 .error-message p {
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 1.5rem;
 }
 
@@ -164,9 +243,9 @@ body {
 
 /* Map Container */
 .map-container {
-    background-color: white;
+    background-color: var(--bg-secondary);
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px var(--shadow);
     padding: 2rem;
     margin-bottom: 2rem;
 }
@@ -183,7 +262,7 @@ body {
     max-width: 100%;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px var(--shadow);
 }
 
 .floor-plan-image {
@@ -256,9 +335,9 @@ body {
 
 /* Legend */
 .map-legend {
-    background-color: white;
+    background-color: var(--bg-secondary);
     border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px var(--shadow);
     padding: 1.5rem;
     max-width: 300px;
     margin: 0 auto;
@@ -285,7 +364,7 @@ body {
 
 .legend-note {
     text-align: center;
-    color: #666;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     font-style: italic;
 }

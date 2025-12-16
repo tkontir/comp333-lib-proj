@@ -1,0 +1,74 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "email": "admin@wesleyan.edu",
+      "password": "admin123",
+      "firstName": "Admin",
+      "lastName": "User",
+      "role": "admin",
+      "department": "Library Administration",
+      "createdAt": "2024-01-01T00:00:00Z",
+      "lastLogin": null,
+      "isActive": true
+    },
+    {
+      "id": "2",
+      "username": "student1",
+      "email": "student1@wesleyan.edu", 
+      "password": "password123",
+      "firstName": "John",
+      "lastName": "Doe",
+      "role": "student",
+      "department": "Computer Science",
+      "createdAt": "2024-06-01T00:00:00Z",
+      "lastLogin": "2024-12-15T10:30:00Z",
+      "isActive": true
+    },
+    {
+      "id": "3",
+      "username": "faculty1",
+      "email": "faculty1@wesleyan.edu",
+      "password": "faculty456",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "role": "faculty",
+      "department": "Mathematics",
+      "createdAt": "2024-03-15T00:00:00Z",
+      "lastLogin": "2024-12-14T14:45:00Z",
+      "isActive": true
+    },
+    {
+      "id": "4",
+      "username": "student2",
+      "email": "student2@wesleyan.edu",
+      "password": "mypassword",
+      "firstName": "Alice",
+      "lastName": "Johnson",
+      "role": "student",
+      "department": "Biology",
+      "createdAt": "2024-08-20T00:00:00Z",
+      "lastLogin": null,
+      "isActive": true
+    },
+    {
+      "id": "5",
+      "username": "librarian",
+      "email": "librarian@wesleyan.edu",
+      "password": "library2024",
+      "firstName": "Mary",
+      "lastName": "Wilson",
+      "role": "staff",
+      "department": "Library Services",
+      "createdAt": "2024-02-10T00:00:00Z",
+      "lastLogin": "2024-12-16T09:15:00Z",
+      "isActive": true
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "lastUpdated": "2024-12-16T00:00:00Z",
+    "totalUsers": 5
+  }
+}

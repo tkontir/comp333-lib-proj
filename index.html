@@ -3,46 +3,251 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Sign In</title>
-		<link rel="stylesheet" href="login/login.css">
+		<title>Wesleyan Library | Smart Room Booking</title>
+		<link rel="stylesheet" href="styles/modern.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 	</head>
 	<body>
-		<a href="testing/tests.html" class="top-left-btn" aria-label="Open tests page">Click here to run unit tests.</a>
+		<!-- Test Link -->
+		<a href="testing/tests.html" class="dev-link" aria-label="Open tests page">Tests</a>
 
-		<main class="page-wrapper">
-			<h1 id="title" class="heading">COMP333 Library Project</h1>
-			<section class="card" aria-labelledby="login-heading">
-				<h1 id="login-heading" class="heading" style="padding-bottom: 10px;">Sign in</h1>
-
-				<form id="login_form" class="login-form" novalidate>
-					<div class="field">
-						<label for="username_input">Email</label>
-						<input id="username_input" name="username" type="text" autocomplete="username"/>
-						<div class="field-help" id="username_help" aria-live="polite"></div>
-					</div>
-
-					<div class="field">
-						<label for="password_input">Password</label>
-						<div class="password-row">
-							<input id="password_input" name="password" type="password" autocomplete="current-password"/>
-						</div>
-						<div class="field-help" id="password_help" aria-live="polite"></div>
-					</div>
-
-					
-
-					<div id="form_message" role="status" aria-live="polite"></div>
-				</form>
-				<div class="actions">
-					<button id="login_button" class="primary">Sign in</button>
+		<!-- Navigation -->
+		<nav class="main-nav">
+			<div class="nav-container">
+				<div class="nav-brand">
+					<img src="wesleyan_logo.png" alt="Wesleyan Logo" class="nav-logo">
+					<span class="logo-text">Wesleyan</span>
+					<span class="logo-accent">University</span>
 				</div>
-			</section>
-		</main>
+				<div class="nav-actions">
+					<button class="nav-btn" id="about-btn">About</button>
+					<button class="nav-btn primary" id="get-started-btn">Get Started</button>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Hero Section -->
+		<section class="hero">
+			<div class="hero-bg">
+				<div class="hero-gradient"></div>
+				<div class="floating-shapes">
+					<div class="shape shape-1"></div>
+					<div class="shape shape-2"></div>
+					<div class="shape shape-3"></div>
+				</div>
+			</div>
+			<div class="hero-container">
+				<div class="hero-content">
+					<h1 class="hero-title">
+						<span class="title-line fade-up">Library Room</span>
+						<span class="title-line fade-up delay-1">Reservations</span>
+						<span class="title-accent fade-up delay-2">Wesleyan</span>
+					</h1>
+					<ul class="hero-subtitle-list fade-up delay-3">
+						<li class="hero-bullet">Group study rooms can be reserved by current Wesleyan students</li>
+						<li class="hero-bullet">Rooms can be reserved for up to 2 hours at a time</li>
+						<li class="hero-bullet">Individuals who have reserved the space have priority during their reserved time</li>
+					</ul>
+					<div class="hero-actions fade-up delay-4">
+						<button id="explore-rooms-btn" class="btn btn-primary">
+							<span>Explore Rooms</span>
+							<svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</button>
+						<button id="real-time-btn" class="btn btn-secondary">
+							<svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M21 16V8C20.9996 7.64927 20.9071 7.30481 20.7315 7.00116C20.556 6.69751 20.3037 6.44536 20 6.27L13 2.27C12.696 2.09446 12.3511 2.00205 12 2.00205C11.6489 2.00205 11.304 2.09446 11 2.27L4 6.27C3.69626 6.44536 3.44398 6.69751 3.26846 7.00116C3.09294 7.30481 3.00036 7.64927 3 8V16C3.00036 16.3507 3.09294 16.6952 3.26846 16.9988C3.44398 17.3025 3.69626 17.5546 4 17.73L11 21.73C11.304 21.9055 11.6489 21.998 12 21.998C12.3511 21.998 12.696 21.9055 13 21.73L20 17.73C20.3037 17.5546 20.556 17.3025 20.7315 16.9988C20.9071 16.6952 20.9996 16.3507 21 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M7.5 4.21L12 6.81L16.5 4.21M12 22.08V12M12 6.81L3.27 2.04" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+							<span>Real-Time Availability</span>
+						</button>
+						<button id="interactive-maps-btn" class="btn btn-secondary">
+							<svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M21 10C21 17 12 23 12 23S3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.3639 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+							<span>Interactive Maps</span>
+						</button>
+						<button id="sign-in-btn" class="btn btn-secondary">
+							<span>Sign In</span>
+						</button>
+					</div>
+				</div>
+				<div class="hero-visual fade-up delay-5">
+					<div class="library-card">
+						<div class="card-header">
+							<div class="card-status available">Available Now</div>
+							<div class="card-time">2:30 PM</div>
+						</div>
+						<div class="card-content">
+							<h3>Study Room 201</h3>
+							<p>Quiet study space • Olin Library</p>
+							<div class="card-features">
+								<span class="feature">WiFi</span>
+								<span class="feature">Whiteboard</span>
+								<span class="feature">4 seats</span>
+							</div>
+						</div>
+						<button class="card-btn">Book Now</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Features Section -->
+		<section class="features">
+			<div class="container">
+				<div class="section-header fade-up">
+					<h2 class="section-title">What is this website for?</h2>
+					<p class="section-subtitle">Book a study room in one of the libraries of Wesleyan University.</p>
+				</div>
+				<div class="features-grid">
+					<div class="feature-card fade-up delay-1">
+						<div class="feature-icon">
+							<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M21 16V8C20.9996 7.64927 20.9071 7.30481 20.7315 7.00116C20.556 6.69751 20.3037 6.44536 20 6.27L13 2.27C12.696 2.09446 12.3511 2.00205 12 2.00205C11.6489 2.00205 11.304 2.09446 11 2.27L4 6.27C3.69626 6.44536 3.44398 6.69751 3.26846 7.00116C3.09294 7.30481 3.00036 7.64927 3 8V16C3.00036 16.3507 3.09294 16.6952 3.26846 16.9988C3.44398 17.3025 3.69626 17.5546 4 17.73L11 21.73C11.304 21.9055 11.6489 21.998 12 21.998C12.3511 21.998 12.696 21.9055 13 21.73L20 17.73C20.3037 17.5546 20.556 17.3025 20.7315 16.9988C20.9071 16.6952 20.9996 16.3507 21 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M7.5 4.21L12 6.81L16.5 4.21M12 22.08V12M12 6.81L3.27 2.04" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>
+						<h3>Real-Time Availability</h3>
+						<p>See live room status, availability, and capacity instantly across all library locations.</p>
+					</div>
+					<div class="feature-card fade-up delay-2">
+						<div class="feature-icon">
+							<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M21 10C21 17 12 23 12 23S3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.3639 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>
+						<h3>Interactive Maps</h3>
+						<p>Navigate through detailed floor plans with clickable room locations and live status indicators.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Sign In Modal -->
+		<div id="signin-modal" class="modal">
+			<div class="modal-backdrop"></div>
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2>Welcome Back</h2>
+					<button class="modal-close" id="modal-close-btn">
+						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</button>
+				</div>
+				<form id="login_form" class="login-form" novalidate>
+					<div class="form-group">
+						<label for="username_input">Email Address</label>
+						<input id="username_input" name="username" type="email" autocomplete="email" placeholder="student@wesleyan.edu"/>
+						<div class="form-help" id="username_help" aria-live="polite"></div>
+					</div>
+
+					<div class="form-group">
+						<label for="password_input">Password</label>
+						<input id="password_input" name="password" type="password" autocomplete="current-password" placeholder="Enter your password"/>
+						<div class="form-help" id="password_help" aria-live="polite"></div>
+					</div>
+
+					<div id="form_message" role="status" aria-live="polite" class="form-message"></div>
+					
+					<div class="form-actions">
+						<button type="button" id="login_button" class="btn btn-primary full-width">
+							<span>Sign In</span>
+						</button>
+						<button type="button" id="guest_button" class="btn btn-secondary full-width">
+							<span>Continue as Guest</span>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
 
 		<script src="login/login.js" defer></script>
+		<script src="scripts/animations.js" defer></script>
+		
+		<!-- Fallback button handlers in case animations.js doesn't load -->
+		<script>
+			// Immediate button handlers as fallback
+			document.addEventListener('DOMContentLoaded', function() {
+				console.log('Fallback button handlers loading...');
+				
+				// Explore Rooms button
+				const exploreBtn = document.getElementById('explore-rooms-btn');
+				if (exploreBtn && !exploreBtn.hasAttribute('data-handled')) {
+					exploreBtn.setAttribute('data-handled', 'true');
+					exploreBtn.addEventListener('click', function(e) {
+						e.preventDefault();
+						console.log('Fallback: Explore Rooms clicked');
+						window.location.href = 'rooms/rooms.html';
+					});
+				}
+				
+				// Get Started button
+				const getStartedBtn = document.getElementById('get-started-btn');
+				if (getStartedBtn && !getStartedBtn.hasAttribute('data-handled')) {
+					getStartedBtn.setAttribute('data-handled', 'true');
+					getStartedBtn.addEventListener('click', function(e) {
+						e.preventDefault();
+						console.log('Fallback: Get Started clicked');
+						const modal = document.getElementById('signin-modal');
+						if (modal) {
+							modal.classList.add('active');
+							document.body.style.overflow = 'hidden';
+						} else {
+							window.location.href = 'rooms/rooms.html';
+						}
+					});
+				}
+				
+				// About button
+				const aboutBtn = document.getElementById('about-btn');
+				if (aboutBtn && !aboutBtn.hasAttribute('data-handled')) {
+					aboutBtn.setAttribute('data-handled', 'true');
+					aboutBtn.addEventListener('click', function(e) {
+						e.preventDefault();
+						console.log('Fallback: About clicked');
+						const features = document.querySelector('.features');
+						if (features) {
+							features.scrollIntoView({ behavior: 'smooth' });
+						}
+					});
+				}
+				
+				// Feature cards
+				const featureCards = document.querySelectorAll('.feature-card');
+				featureCards.forEach((card, index) => {
+					if (!card.hasAttribute('data-handled')) {
+						card.setAttribute('data-handled', 'true');
+						card.style.cursor = 'pointer';
+						card.addEventListener('click', function(e) {
+							e.preventDefault();
+							console.log(`Fallback: Feature card ${index} clicked`);
+							
+							switch (index) {
+								case 0: // Real-Time Availability
+									window.location.href = 'rooms/rooms.html';
+									break;
+								case 1: // Interactive Maps
+									window.location.href = 'rooms/map.html';
+									break;
+								case 2: // Smart Filtering
+									window.location.href = 'home/home.html';
+									break;
+								default:
+									window.location.href = 'rooms/rooms.html';
+							}
+						});
+					}
+				});
+				
+				console.log('Fallback button handlers loaded');
+			});
+		</script>
 	</body>
 </html>
-
-
-
-<!-- http://0.0.0.0:5500/index.html -->

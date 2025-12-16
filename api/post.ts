@@ -1,7 +1,27 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import * as https from 'https'; // Use * as https for ES module environments
+/// <reference types="node" />
+
+import * as https from 'https';
 import { URLSearchParams } from 'url';
-import * as zlib from 'zlib'; // Use * as zlib
+import { IncomingMessage } from 'http';
+import * as zlib from 'zlib';
+
+// Basic type definitions for Vercel-like request/response
+interface VercelRequest {
+    method?: string;
+    query: Record<string, any>;
+    body?: any;
+}
+
+interface VercelResponse {
+    status(code: number): VercelResponse;
+    json(data: any): VercelResponse;
+}
+
+// Global declarations for Node.js environment
+declare global {
+    var Buffer: typeof Buffer;
+    var console: Console;
+}
 
 // The main handler function for your Vercel API endpoint
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -33,12 +53,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         let lid = '8176';
         let gid = '14568';
         let eid = '107918';
+        let referer = 'https://libcal.wesleyan.edu/reserve';
 
         if (req.method === 'GET') {
             const q = req.query as Record<string, any>;
             if (q.lid) lid = String(q.lid);
             if (q.gid) gid = String(q.gid);
             if (q.eid) eid = String(q.eid);
+            if (q.referer) referer = String(q.referer);
+            if (q.link) referer = String(q.link);
         } else if (req.method === 'POST') {
             const body = (req as any).body || {};
             if (Array.isArray(body.payload) && body.payload.length >= 3) {
@@ -48,6 +71,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 if (body.gid) gid = String(body.gid);
                 if (body.eid) eid = String(body.eid);
             }
+            if (body.referer) referer = String(body.referer);
+            if (body.link) referer = String(body.link);
         }
 
         const form = new URLSearchParams({
@@ -78,7 +103,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 'Content-Length': Buffer.byteLength(postData), // Important for POST requests
                 'Accept-Language': 'en-US,en;q=0.9',
                 'Origin': 'https://libcal.wesleyan.edu',
-                'Referer': 'https://libcal.wesleyan.edu/reserve/olin-group/251',
+                'Referer': referer,
                 'X-Requested-With': 'XMLHttpRequest',
                 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36',
                 // Many of these headers are often unnecessary for a server-to-server call 
@@ -87,9 +112,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         };
 
         const result = await new Promise<string>((resolve, reject) => {
-            const req = https.request(options, (externalRes) => {
+            const req = https.request(options, (externalRes: IncomingMessage) => {
                 const chunks: Buffer[] = [];
-                externalRes.on('data', (c) => chunks.push(c));
+                externalRes.on('data', (chunk: Buffer) => chunks.push(chunk));
                 externalRes.on('end', () => {
                     const buffer = Buffer.concat(chunks);
                     const enc = (externalRes.headers['content-encoding'] || '').toLowerCase();
@@ -113,7 +138,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 });
             });
 
-            req.on('error', (err) => reject(err));
+            req.on('error', (err: Error) => reject(err));
             
             // Write the post data and end the request
             req.write(postData);

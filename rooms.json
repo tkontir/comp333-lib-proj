@@ -13,7 +13,7 @@
             "link": "https://libcal.wesleyan.edu/reserve/olin-group/251",
             "seats": 8,
             "features": [
-                "blackboard"
+                "Blackboard", "Rolling Chairs", "Outlets"
             ],
             "description": "On Olin floor 2A Olin floor 2A map: https://www.wesleyan.edu/libr/images/floorplans-maps/olin_floor_2a.jpg",
             "payload": [8176, 14568, 107918]
@@ -29,6 +29,7 @@
             "link": "https://libcal.wesleyan.edu/reserve/science-group/77",
             "seats": 5,
             "features": [
+                "Outlets"
             ],
             "description": "On Science Library ground floor",
             "payload": [8535, 15749, 109880]
@@ -44,6 +45,7 @@
             "link": "https://libcal.wesleyan.edu/reserve/science-group/78",
             "seats": 4,
             "features": [
+                "Outlets"
             ],
             "description": "On Science Library ground floor",
             "payload": [8535, 15749, 109881]
@@ -59,6 +61,7 @@
             "link": "https://libcal.wesleyan.edu/reserve/science-group/80",
             "seats": 4,
             "features": [
+                "Outlets"
             ],
             "description": "On Science Library ground floor",
             "payload": [8535, 15749, 109882]
@@ -74,6 +77,7 @@
             "link": "https://libcal.wesleyan.edu/reserve/science-group/87",
             "seats": 5,
             "features": [
+                "Blackboard", "Whiteboard", "Outlets"
             ],
             "description": "On Science Library ground floor",
             "payload": [8535, 15749, 109883]
@@ -89,6 +93,7 @@
             "link": "https://libcal.wesleyan.edu/reserve/science-group/88",
             "seats": 9,
             "features": [
+                "Blackboard", "Outlets"
             ],
             "description": "On Science Library ground floor",
             "payload": [8535, 15749, 109884]
@@ -104,6 +109,7 @@
             "link": "https://libcal.wesleyan.edu/reserve/science-group/260",
             "seats": 8,
             "features": [
+                "Blackboard", "Outlets"
             ],
             "description": "On Science Library 2nd floor",
             "payload": [8535, 15749, 107927]
@@ -119,6 +125,7 @@
             "link": "https://libcal.wesleyan.edu/reserve/science-group/266",
             "seats": 6,
             "features": [
+                "Blackboard", "TV", "Rolling Chairs", "Outlets"
             ],
             "description": "On Science Library 2nd floor.",
             "payload": [8535, 15749, 107947]
@@ -134,6 +141,7 @@
             "link": "https://libcal.wesleyan.edu/reserve/science-group/268",
             "seats": 6,
             "features": [
+                "Blackboard", "Rolling Chairs", "Outlets"
             ],
             "description": "On Science Library 2nd floor",
             "payload": [8535, 15749, 107950]
@@ -149,6 +157,7 @@
             "link": "https://libcal.wesleyan.edu/reserve/science-group/269",
             "seats": 4,
             "features": [
+                "Whiteboard", "Outlets"
             ],
             "description": "On Science Library 2nd floor",
             "payload": [8535, 15749, 109877]
@@ -164,6 +173,7 @@
             "link": "https://libcal.wesleyan.edu/reserve/science-group/270",
             "seats": 4,
             "features": [
+                "Blackboard", "Outlets"
             ],
             "description": "On Science Library 2nd floor",
             "payload": [8535, 15749, 109878]

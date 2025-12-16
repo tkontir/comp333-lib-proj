@@ -1,38 +1,91 @@
-/* loadRooms() => object
-    This function opens the room info JSON and returns the parsed data
+/* load_rooms() => object
+    Fetch rooms.json with fallbacks for different hosting setups
 */
-async function loadRooms() {
-    try {
-        const res = await fetch('/rooms.json');
-        if (!res.ok) {
-            throw new Error(`Failed to fetch rooms.json (status ${res.status})`);
+async function load_rooms() {
+    const paths = ['../rooms.json', './rooms.json', '/rooms.json'];
+    let last_error = null;
+    for (const path of paths) {
+        try {
+            const res = await fetch(path, { cache: 'no-cache' });
+            if (!res.ok) {
+                throw new Error(`Failed to fetch rooms.json (status ${res.status})`);
+            }
+            const data = await res.json();
+            return data;
+        } catch (err) {
+            console.warn(`Error loading rooms.json from ${path}`, err);
+            last_error = err;
         }
-        const data = await res.json();
-        return data;
-    } catch (err) {
-        console.error('Error loading rooms.json:', err);
-        throw err;
     }
+    console.error('Error loading rooms.json:', last_error);
+    throw last_error || new Error('rooms.json could not be loaded');
 }
 
-/* loadRoomById(id : int) => object|null
-    This function parses through the rooms data and returns the room with the matching ID.
-    Returns null if no room is found.
+/* load_room_by_identifier({id, room_number}) => object|null
+    Load a specific room by ID or room number from rooms.json
 */
-async function loadRoomById(id) {
-    if (id == null) return null;
-    const data = await loadRooms();
-    let roomsArray = null;
+async function load_room_by_identifier({ id = null, room_number = null }) {
+    if (id == null && room_number == null) return null;
+
+    const data = await load_rooms();
+    let rooms_array = null;
     if (Array.isArray(data)) {
-        roomsArray = data;
+        rooms_array = data;
     } else if (data && Array.isArray(data.rooms)) {
-        roomsArray = data.rooms;
+        rooms_array = data.rooms;
     }
 
-    if (!roomsArray) return null;
+    if (!rooms_array) return null;
 
-    // Compare as strings to be tolerant of number/string ids
-    return roomsArray.find(r => String(r.id) === String(id)) || null;
+    const norm_id = normalize_id(id);
+    const norm_room = normalize_id(room_number);
+    const digits_id = strip_non_digits(norm_id);
+    const digits_room = strip_non_digits(norm_room);
+
+    if (norm_id) {
+        const by_id = rooms_array.find(r => normalize_id(r.id) === norm_id);
+        if (by_id) return by_id;
+    }
+    if (digits_id) {
+        const by_digits = rooms_array.find(r => strip_non_digits(r.id) === digits_id);
+        if (by_digits) return by_digits;
+    }
+    if (norm_room) {
+        const by_room = rooms_array.find(r => normalize_id(r.location?.roomNumber) === norm_room);
+        if (by_room) return by_room;
+    }
+    if (digits_room) {
+        const by_room_digits = rooms_array.find(r => strip_non_digits(r.location?.roomNumber) === digits_room);
+        if (by_room_digits) return by_room_digits;
+    }
+
+    console.warn('Room not found. Available ids:', rooms_array.map(r => r.id).join(', '));
+    return null;
+}
+
+/* load_room_by_id(id) => object|null
+    Load a room by its ID
+*/
+async function load_room_by_id(id) {
+    return load_room_by_identifier({ id });
+}
+
+/* normalize_id(value) => string|null
+    Normalize an ID value for comparison
+*/
+function normalize_id(value) {
+    if (value == null) return null;
+    const s = String(value).trim();
+    return s === '' ? null : s;
+}
+
+/* strip_non_digits(value) => string|null
+    Strip all non-digit characters from a value
+*/
+function strip_non_digits(value) {
+    if (value == null) return null;
+    const digits = String(value).replace(/\D+/g, '');
+    return digits === '' ? null : digits;
 }
 
 /* render_room_details(room : object) => null
@@ -48,10 +101,19 @@ function render_room_details(room) {
     document.getElementById('room-description-text').textContent = room.description || 'No description available.';
 
     // Update availability status
-    const availability_element = document.getElementById('room-availability');
+    const availability_element = document.getElementById('room-status-badge');
     const is_available = room.seats > 0 && room.building !== '';
-    availability_element.textContent = is_available ? 'Available' : 'Unavailable';
-    availability_element.className = `detail-value availability-badge ${is_available ? 'available' : 'unavailable'}`;
+    if (availability_element) {
+        const status_text = availability_element.querySelector('.status-text');
+        const status_dot = availability_element.querySelector('.status-dot');
+        if (status_text) status_text.textContent = is_available ? 'Available' : 'Unavailable';
+        availability_element.classList.toggle('available', is_available);
+        availability_element.classList.toggle('unavailable', !is_available);
+        if (status_dot) {
+            status_dot.classList.toggle('available', is_available);
+            status_dot.classList.toggle('unavailable', !is_available);
+        }
+    }
 
     /* load_room_image (room object) => void
        Load room images based on room number and building.
@@ -99,7 +161,7 @@ function render_room_details(room) {
     }
 
     // Render features
-    const features_container = document.getElementById('features-list');
+    const features_container = document.getElementById('room-features-list');
     if (features_container) {
         render_room_features(room.features || []);
     }
@@ -123,7 +185,7 @@ function render_room_details(room) {
     Takes an array of feature strings and creates feature items.
 */
 function render_room_features(features) {
-    const features_container = document.getElementById('features-list');
+    const features_container = document.getElementById('room-features-list');
     if (!features_container) {
         return;
     }
@@ -149,32 +211,10 @@ function create_feature_element(feature) {
     const feature_div = document.createElement('div');
     feature_div.className = 'feature-item';
 
-    const icon_span = document.createElement('span');
-    icon_span.className = 'feature-icon';
-    
-    // Map features to appropriate icons
-    const feature_icons = {
-        'blackboard': '📝',
-        'whiteboard': '📋',
-        'projector': '📽️',
-        'computer': '💻',
-        'wifi': '📶',
-        'printer': '🖨️',
-        'scanner': '📄',
-        'phone': '📞',
-        'tv': '📺',
-        'conference': '👥',
-        'microphone': '🎤',
-        'speaker': '🔊'
-    };
-    
-    icon_span.textContent = feature_icons[feature.toLowerCase()] || '🔧';
-
     const text_span = document.createElement('span');
     text_span.className = 'feature-text';
     text_span.textContent = feature;
 
-    feature_div.appendChild(icon_span);
     feature_div.appendChild(text_span);
 
     return feature_div;
@@ -221,7 +261,7 @@ function initialize_modal() {
         if (!book_button.disabled) {
             const room_id = new URLSearchParams(window.location.search).get('id');
             try {
-                const room = await loadRoomById(room_id);
+                const room = await load_room_by_id(room_id);
                 
                 if (room && room.link) {
                     // Open the LibCal link in a new tab
@@ -251,16 +291,7 @@ function initialize_modal() {
     });
 }
 
-/* initialize_availability_check() => null
-    Initialize availability check functionality.
-*/
-function initialize_availability_check() {
-    const availability_button = document.getElementById('check-availability-btn');
-    
-    availability_button.addEventListener('click', () => {
-        alert('Need to add availability checking later.');
-    });
-}
+
 
 // Main execution when page loads
 document.addEventListener('DOMContentLoaded', () => {
@@ -268,21 +299,25 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize modal and other interactive elements
     initialize_modal();
-    initialize_availability_check();
 
     const query_string = window.location.search;
     const params = new URLSearchParams(query_string);
-    const room_id = params.get('id');
+    const room_id = params.get('id') || params.get('roomId') || params.get('ID') || params.get('RoomId');
+    const room_number = params.get('roomNumber') || params.get('room') || params.get('RoomNumber') || params.get('Room');
 
-    if (room_id) {
-        loadRoomById(room_id)
+    if (room_id || room_number) {
+        load_room_by_identifier({ id: room_id, room_number: room_number })
             .then(room => {
                 if (room) {
-                    // console.log('Loaded room:', room);
-                    render_room_details(room);
-                    show_room_content();
+                    try {
+                        render_room_details(room);
+                        show_room_content();
+                    } catch (renderError) {
+                        console.error('Error rendering room details:', renderError);
+                        show_error_state();
+                    }
                 } else {
-                    console.warn(`Room with id ${room_id} not found in rooms.json`);
+                    console.warn(`Room not found (id=${room_id}, roomNumber=${room_number}) in rooms.json`);
                     show_error_state();
                 }
             })
@@ -295,14 +330,17 @@ document.addEventListener('DOMContentLoaded', () => {
         show_error_state();
     }
 
-    renderAvailabilityBar();
+    render_availability_bar();
     fetchAvailability();
+    
+    // Position and start updating the current time marker
+    startTimeMarkerUpdater();
 });
 
-/* renderAvailabilityBar(intervalMinutes = 15, startHour = 0, endHour = 24)
+/* render_availability_bar(interval_minutes = 15, start_hour = 0, end_hour = 24)
    Creates clickable segments representing availability. Default creates 96 segments (24h * 4).
 */
-function renderAvailabilityBar(intervalMinutes = 15, startHour = 0, endHour = 24) {
+function render_availability_bar(interval_minutes = 15, start_hour = 0, end_hour = 24) {
     const container = document.getElementById('availability-bar');
     if (!container) return;
 
@@ -380,16 +418,21 @@ async function fetchAvailability() {
 
     try {
         const params = new URLSearchParams(window.location.search);
-        const currentRoomId = params.get('id');
+        const currentRoomId = params.get('id') || params.get('roomId') || params.get('ID') || params.get('RoomId');
+        const currentRoomNumber = params.get('roomNumber') || params.get('room') || params.get('RoomNumber') || params.get('Room');
         let roomPayload = null;
         let currentRoomItemId = null;
+        let roomLink = null;
         if (currentRoomId) {
             try {
-                const room = await loadRoomById(currentRoomId);
+                const room = await load_room_by_identifier({ id: currentRoomId, room_number: currentRoomNumber });
                 if (room && Array.isArray(room.payload)) {
                     roomPayload = room.payload;
                     // Extract the itemId (third element in payload array)
                     currentRoomItemId = room.payload[2];
+                }
+                if (room && room.link) {
+                    roomLink = room.link;
                 }
             } catch (e) {
                 console.warn('Unable to load room payload for availability request', e);
@@ -401,7 +444,7 @@ async function fetchAvailability() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ payload: roomPayload })
+            body: JSON.stringify({ payload: roomPayload, referer: roomLink })
         });
 
         if (!response.ok) {
@@ -566,4 +609,55 @@ function applyAvailabilityFromData(data) {
     }
 
     setAvailability(statuses);
+}
+
+// Position the current time marker on the 24-hour availability bar
+function positionCurrentTimeMarker() {
+    const marker = document.getElementById('current-time-marker');
+    const availabilityBar = document.getElementById('availability-bar');
+    
+    if (!marker || !availabilityBar) return;
+    
+    // Get current time
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    
+    // Calculate total minutes since midnight
+    const totalMinutes = hours * 60 + minutes;
+    
+    // Total minutes in 24 hours = 1440
+    // Each segment is 15 minutes, so 96 segments total
+    // Position as percentage of the bar
+    const percentagePosition = (totalMinutes / 1440) * 100;
+    
+    // Position the marker
+    marker.style.left = `${percentagePosition}%`;
+    
+    // Optional: scroll to current time on load
+    const markerPosition = (percentagePosition / 100) * availabilityBar.scrollWidth;
+    const wrapperWidth = availabilityBar.parentElement.clientWidth;
+    const scrollPosition = markerPosition - (wrapperWidth / 2);
+    
+    availabilityBar.parentElement.scrollTo({
+        left: Math.max(0, scrollPosition),
+        behavior: 'smooth'
+    });
+    
+    // Update marker label with current time
+    const markerLabel = marker.querySelector('.marker-label');
+    if (markerLabel) {
+        const timeString = now.toLocaleTimeString('en-US', { 
+            hour: 'numeric', 
+            minute: '2-digit',
+            hour12: true 
+        });
+        markerLabel.textContent = timeString;
+    }
+}
+
+// Update the current time marker every minute
+function startTimeMarkerUpdater() {
+    positionCurrentTimeMarker();
+    setInterval(positionCurrentTimeMarker, 60000); // Update every minute
 }

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Wesleyan Library</title>
+    <link rel="stylesheet" href="../styles/modern.css">
+    <link rel="stylesheet" href="login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="../wesleyan_logo.png" alt="Wesleyan Logo" class="nav-logo">
+                <span class="logo-text">Wesleyan</span>
+                <span class="logo-accent">University</span>
+            </div>
+            <div class="nav-actions">
+                <a href="../index.html" class="nav-btn">← Home</a>
+                <a href="../rooms/rooms.html" class="nav-btn">Browse Rooms</a>
+                <a href="login.html" class="nav-btn primary">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sign Up Container -->
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>Create Account</h1>
+                <p>Join Wesleyan Library to book rooms and manage reservations</p>
+            </div>
+
+            <form id="signup_form" class="login-form">
+                <div class="form-message" id="form_message"></div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first_name_input">First Name</label>
+                        <input 
+                            type="text" 
+                            id="first_name_input" 
+                            placeholder="Enter your first name"
+                            autocomplete="given-name"
+                        >
+                        <div class="form-help" id="first_name_help"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="last_name_input">Last Name</label>
+                        <input 
+                            type="text" 
+                            id="last_name_input" 
+                            placeholder="Enter your last name"
+                            autocomplete="family-name"
+                        >
+                        <div class="form-help" id="last_name_help"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email_input">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="email_input" 
+                        placeholder="Enter your email address"
+                        autocomplete="email"
+                    >
+                    <div class="form-help" id="email_help"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="username_input">Username</label>
+                    <input 
+                        type="text" 
+                        id="username_input" 
+                        placeholder="Choose a username"
+                        autocomplete="username"
+                    >
+                    <div class="form-help" id="username_help"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="department_input">Department</label>
+                    <select id="department_input">
+                        <option value="">Select your department</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Biology">Biology</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Physics">Physics</option>
+                        <option value="English">English</option>
+                        <option value="History">History</option>
+                        <option value="Psychology">Psychology</option>
+                        <option value="Economics">Economics</option>
+                        <option value="Political Science">Political Science</option>
+                        <option value="Art">Art</option>
+                        <option value="Music">Music</option>
+                        <option value="Philosophy">Philosophy</option>
+                        <option value="Sociology">Sociology</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <div class="form-help" id="department_help"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="role_input">Role</label>
+                    <select id="role_input">
+                        <option value="">Select your role</option>
+                        <option value="student">Student</option>
+                        <option value="faculty">Faculty</option>
+                        <option value="staff">Staff</option>
+                    </select>
+                    <div class="form-help" id="role_help"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password_input">Password</label>
+                    <input 
+                        type="password" 
+                        id="password_input" 
+                        placeholder="Create a secure password"
+                        autocomplete="new-password"
+                    >
+                    <div class="form-help" id="password_help"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password_input">Confirm Password</label>
+                    <input 
+                        type="password" 
+                        id="confirm_password_input" 
+                        placeholder="Confirm your password"
+                        autocomplete="new-password"
+                    >
+                    <div class="form-help" id="confirm_password_help"></div>
+                </div>
+
+                <button type="button" id="signup_button" class="btn btn-primary login-btn">
+                    <span>Create Account</span>
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                
+                <button type="button" id="guest_button" class="btn btn-outline guest-btn">
+                    <span>Continue as Guest</span>
+                </button>
+
+                <div class="signup-login-link">
+                    <p>Already have an account? <a href="login.html">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="signup.js"></script>
+    <script src="../scripts/animations.js"></script>
+</body>
+</html>
