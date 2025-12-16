@@ -25,7 +25,7 @@ DRY Principle https://www.geeksforgeeks.org/software-engineering/dont-repeat-you
 
 ## Branching Norms: 
 
-Before branching, all members of the team will discuss which features they hope to implement to avoid working on the same thing twice. All branch names will follow the same style with roughly two clear and concise words that speak to what the branch hopes to implement, separated by a dash. For example: "login-page", both words will be lowercase. Branches will be pushed to main after discussion with the team and after the team member has checked it for compatibility. If any branch directly affects another feature, the team member will have to communicate with the other team member responsible for that feature to make sure that the entire team is on the same page about what our code is accomplishing.
+Before branching, all members of the team will discuss which features they hope to implement to avoid working on the same thing twice. Our naming conventions for these branches will not have very strict naming rules. As long as they are simple are cocise and no longer then 3 words total. It is also acceptable to break these words up with either a - and a _ for clarity's sake. Branches will be pushed to main after discussion with the team and after the team member has checked it for compatibility. If any branch directly affects another feature, the team member will have to communicate with the other team member responsible for that feature to make sure that the entire team is on the same page about what our code is accomplishing.
 
 2025
 
