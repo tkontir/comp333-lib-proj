@@ -275,6 +275,8 @@
   border: 1px solid #d1d5db;
   background: #f9fafb;
   position: relative;
+  max-width: 100%;
+  width: 100%;
 }
 
 .availability-bar {
@@ -282,7 +284,8 @@
   height: 56px;
   background: #ffffff;
   display: block;
-  overflow: hidden;
+  overflow: visible;
+  min-width: 100%;
 }
 
 .availability-bar .bar-inner {
