@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
 /* render_availability_bar(interval_minutes = 15, start_hour = 0, end_hour = 24)
    Creates clickable segments representing availability. Default creates 96 segments (24h * 4).
 */
-function render_availability_bar(interval_minutes = 15, start_hour = 0, end_hour = 24) {
+function render_availability_bar(intervalMinutes = 15, startHour = 0, endHour = 24) {
     const container = document.getElementById('availability-bar');
     if (!container) return;
 
