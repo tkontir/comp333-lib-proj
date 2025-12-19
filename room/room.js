@@ -360,6 +360,35 @@ function render_availability_bar(intervalMinutes = 15, startHour = 0, endHour = 
     const segmentWidth = 20; 
     inner.style.width = `${segments * segmentWidth}px`;
 
+    // Render time labels
+    const timeLabelsContainer = document.getElementById('availability-time-labels');
+    if (timeLabelsContainer) {
+        timeLabelsContainer.innerHTML = '';
+        const labelInner = document.createElement('div');
+        labelInner.className = 'time-label-inner';
+        const hoursCount = endHour - startHour;
+        labelInner.style.width = `${segments * segmentWidth}px`;
+        
+        for (let h = 0; h < hoursCount; h++) {
+            const hourLabel = document.createElement('div');
+            hourLabel.className = 'time-label';
+            const hour = startHour + h;
+            hourLabel.textContent = `${String(hour).padStart(2, '0')}:00`;
+            hourLabel.style.flex = `0 0 ${segmentsPerHour * segmentWidth}px`;
+            hourLabel.style.minWidth = `${segmentsPerHour * segmentWidth}px`;
+            labelInner.appendChild(hourLabel);
+        }
+        timeLabelsContainer.appendChild(labelInner);
+        
+        // Sync scrolling between time labels and availability bar
+        const barWrapper = document.querySelector('.availability-bar-wrapper');
+        if (barWrapper) {
+            barWrapper.addEventListener('scroll', function() {
+                timeLabelsContainer.scrollLeft = barWrapper.scrollLeft;
+            });
+        }
+    }
+
     for (let i = 0; i < segments; i++) {
         const div = document.createElement('div');
         div.className = 'availability-segment state-default';
