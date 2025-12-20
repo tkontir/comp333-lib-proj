@@ -596,8 +596,10 @@ class ModernAnimations {
         
         if (signInBtn && modal) {
             signInBtn.addEventListener('click', () => {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                window.location.href = 'login/login.html';
+
+                // modal.classList.add('active');
+                // document.body.style.overflow = 'hidden';
             });
         }
         
