@@ -596,15 +596,19 @@ class ModernAnimations {
         
         if (signInBtn && modal) {
             signInBtn.addEventListener('click', () => {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                window.location.href = 'login/login.html';
+
+                // modal.classList.add('active');
+                // document.body.style.overflow = 'hidden';
             });
         }
         
         if (getStartedBtn && modal) {
             getStartedBtn.addEventListener('click', () => {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                window.location.href = 'login/login.html';
+
+                // modal.classList.add('active');
+                // document.body.style.overflow = 'hidden';
             });
         }
 
@@ -730,17 +734,14 @@ class ModernAnimations {
     }
     
     fixModalButtons() {
-        // Sign in modal buttons
+        // Sign in buttons - navigate to login page
         const signInButtons = document.querySelectorAll('[onclick*="openSignInModal"], .sign-in-btn, #sign-in-btn');
         signInButtons.forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                const modal = document.getElementById('signInModal') || document.getElementById('signin-modal');
-                if (modal) {
-                    modal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                }
+                console.log('Sign In clicked - navigating to login');
+                window.location.href = 'login/login.html';
             });
         });
         
@@ -817,15 +818,8 @@ class ModernAnimations {
             getStartedBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log('Get Started clicked - opening sign in modal');
-                const modal = document.getElementById('signInModal') || document.getElementById('signin-modal');
-                if (modal) {
-                    modal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    // Fallback to rooms page
-                    window.location.href = 'rooms/rooms.html';
-                }
+                console.log('Get Started clicked - navigating to login');
+                window.location.href = 'login/login.html';
             });
         }
 

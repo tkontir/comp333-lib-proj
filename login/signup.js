@@ -1,4 +1,5 @@
-/* Sign Up Functionality */
+/* Sign Up Functionality with Firebase Integration */
+import { auth, createUserWithEmailAndPassword } from './firebase-config.js';
 
 /* valid_email (string) => boolean
    Simple email format validation using regex.
@@ -67,6 +68,66 @@ async function loadUsers() {
   throw lastError || new Error('Users database could not be loaded');
 }
 
+/* createUserFirebase(userInfo) => Promise<User>
+   Create a new user account using Firebase Authentication.
+*/
+async function createUserFirebase(userInfo) {
+  try {
+    // Create user in Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(
+      auth, 
+      userInfo.email, 
+      userInfo.password
+    );
+    
+    const firebaseUser = userCredential.user;
+    console.log('Firebase user created:', firebaseUser.uid);
+    
+    // Create user object with additional profile information
+    const newUser = {
+      id: firebaseUser.uid,
+      username: userInfo.username,
+      email: firebaseUser.email,
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName,
+      displayName: `${userInfo.firstName} ${userInfo.lastName}`,
+      createdAt: new Date().toISOString(),
+      lastLogin: new Date().toISOString(),
+      isActive: true
+    };
+    
+    // TODO: Store additional user profile information in Firestore/Database
+    // For now, we're just using Firebase Auth
+    
+    return newUser;
+  } catch (error) {
+    console.error('Firebase user creation error:', error);
+    
+    // Map Firebase error codes to user-friendly messages
+    let errorMessage = 'Unable to create account. Please try again.';
+    
+    switch (error.code) {
+      case 'auth/email-already-in-use':
+        errorMessage = 'An account with this email already exists.';
+        break;
+      case 'auth/invalid-email':
+        errorMessage = 'Invalid email address format.';
+        break;
+      case 'auth/operation-not-allowed':
+        errorMessage = 'Email/password accounts are not enabled. Please contact support.';
+        break;
+      case 'auth/weak-password':
+        errorMessage = 'Password is too weak. Please use a stronger password.';
+        break;
+      case 'auth/network-request-failed':
+        errorMessage = 'Network error. Please check your connection.';
+        break;
+    }
+    
+    throw new Error(errorMessage);
+  }
+}
+
 /* checkUserExists(email, username) => Promise<boolean>
    Check if email or username already exists.
 */
@@ -84,6 +145,7 @@ async function checkUserExists(email, username) {
 }
 
 /* createUser(userInfo) => Promise<User>
+   [DEPRECATED] Legacy user creation function - kept for reference.
    Create a new user account (simulated - in real app would save to database).
 */
 async function createUser(userInfo) {
@@ -136,8 +198,6 @@ async function signup() {
   const lastNameInput = document.getElementById('last_name_input');
   const emailInput = document.getElementById('email_input');
   const usernameInput = document.getElementById('username_input');
-  const departmentInput = document.getElementById('department_input');
-  const roleInput = document.getElementById('role_input');
   const passwordInput = document.getElementById('password_input');
   const confirmPasswordInput = document.getElementById('confirm_password_input');
   const formMessage = document.getElementById('form_message');
@@ -151,8 +211,6 @@ async function signup() {
   const lastName = lastNameInput.value.trim();
   const email = emailInput.value.trim();
   const username = usernameInput.value.trim();
-  const department = departmentInput.value;
-  const role = roleInput.value;
   const password = passwordInput.value;
   const confirmPassword = confirmPasswordInput.value;
 
@@ -191,16 +249,6 @@ async function signup() {
     hasErrors = true;
   }
 
-  if (!department) {
-    showFieldError(document.getElementById('department_help'), 'Please select your department');
-    hasErrors = true;
-  }
-
-  if (!role) {
-    showFieldError(document.getElementById('role_help'), 'Please select your role');
-    hasErrors = true;
-  }
-
   if (!password) {
     showFieldError(document.getElementById('password_help'), 'Password is required');
     hasErrors = true;
@@ -225,15 +273,13 @@ async function signup() {
   showLoadingState(signupButton, 'Creating Account...');
 
   try {
-    // Create user account
-    const newUser = await createUser({
+    // Create user account with Firebase
+    const newUser = await createUserFirebase({
+      email,
+      password,
       firstName,
       lastName,
-      email,
-      username,
-      department,
-      role,
-      password
+      username
     });
 
     console.log("Sign-up successful for:", newUser.email);
@@ -242,7 +288,7 @@ async function signup() {
     sessionStorage.setItem('currentUser', JSON.stringify(newUser));
     
     // Show success message
-    showFormMessage(formMessage, `Welcome to Wesleyan Library, ${newUser.firstName}! Redirecting...`, 'success');
+    showFormMessage(formMessage, `Welcome to Wesleyan Library, ${firstName}! Redirecting...`, 'success');
     
     // Navigate to rooms page with animation
     setTimeout(() => {

@@ -129,46 +129,7 @@
 			</div>
 		</section>
 
-		<!-- Sign In Modal -->
-		<div id="signin-modal" class="modal">
-			<div class="modal-backdrop"></div>
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2>Welcome Back</h2>
-					<button class="modal-close" id="modal-close-btn">
-						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-					</button>
-				</div>
-				<form id="login_form" class="login-form" novalidate>
-					<div class="form-group">
-						<label for="username_input">Email Address</label>
-						<input id="username_input" name="username" type="email" autocomplete="email" placeholder="student@wesleyan.edu"/>
-						<div class="form-help" id="username_help" aria-live="polite"></div>
-					</div>
-
-					<div class="form-group">
-						<label for="password_input">Password</label>
-						<input id="password_input" name="password" type="password" autocomplete="current-password" placeholder="Enter your password"/>
-						<div class="form-help" id="password_help" aria-live="polite"></div>
-					</div>
-
-					<div id="form_message" role="status" aria-live="polite" class="form-message"></div>
-					
-					<div class="form-actions">
-						<button type="button" id="login_button" class="btn btn-primary full-width">
-							<span>Sign In</span>
-						</button>
-						<button type="button" id="guest_button" class="btn btn-secondary full-width">
-							<span>Continue as Guest</span>
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-
-		<script src="login/login.js" defer></script>
+		<!-- Modal removed - users now navigate to login/login.html -->
 		<script src="scripts/animations.js" defer></script>
 		
 		<!-- Fallback button handlers in case animations.js doesn't load -->
@@ -194,14 +155,19 @@
 					getStartedBtn.setAttribute('data-handled', 'true');
 					getStartedBtn.addEventListener('click', function(e) {
 						e.preventDefault();
-						console.log('Fallback: Get Started clicked');
-						const modal = document.getElementById('signin-modal');
-						if (modal) {
-							modal.classList.add('active');
-							document.body.style.overflow = 'hidden';
-						} else {
-							window.location.href = 'rooms/rooms.html';
-						}
+						console.log('Get Started clicked - navigating to login');
+						window.location.href = 'login/login.html';
+					});
+				}
+				
+				// Sign In button
+				const signInBtn = document.getElementById('sign-in-btn');
+				if (signInBtn && !signInBtn.hasAttribute('data-handled')) {
+					signInBtn.setAttribute('data-handled', 'true');
+					signInBtn.addEventListener('click', function(e) {
+						e.preventDefault();
+						console.log('Sign In clicked - navigating to login');
+						window.location.href = 'login/login.html';
 					});
 				}
 				
@@ -247,6 +213,49 @@
 				});
 				
 				console.log('Fallback button handlers loaded');
+			});
+
+			// Import the functions you need from the SDKs you need
+			import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+			import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+			// Your web app's Firebase configuration
+			const firebaseConfig = {
+				apiKey: "AIzaSyD2JOabdyNAqneol6KC2O_XIRtz74JSnmA",
+				authDomain: "comp333-6beb3.firebaseapp.com",
+				projectId: "comp333-6beb3",
+				storageBucket: "comp333-6beb3.firebasestorage.app",
+				messagingSenderId: "265472657782",
+				appId: "1:265472657782:web:edb748f413e78f4ddc1257",
+				measurementId: "G-T17NKC4JE0"
+			};
+
+			// Initialize Firebase and Auth
+			const app = initializeApp(firebaseConfig);
+			const auth = getAuth(app);
+
+			// --- Logic for Sign Up ---
+			window.signUpUser = (email, password) => {
+				createUserWithEmailAndPassword(auth, email, password)
+				.then((userCredential) => console.log("User Created:", userCredential.user))
+				.catch((error) => alert(error.message));
+			};
+
+			// --- Logic for Login ---
+			window.loginUser = (email, password) => {
+				signInWithEmailAndPassword(auth, email, password)
+				.then((userCredential) => console.log("Logged In:", userCredential.user))
+				.catch((error) => alert(error.message));
+			};
+
+			// --- Listen for Auth State (Check if logged in) ---
+			onAuthStateChanged(auth, (user) => {
+				if (user) {
+				console.log("User is signed in:", user.uid);
+				// Redirect or show hidden content here
+				} else {
+				console.log("No user is signed in.");
+				}
 			});
 		</script>
 	</body>
