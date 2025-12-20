@@ -1,3 +1,6 @@
+/* Firebase Integration */
+import { auth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from './firebase-config.js';
+
 /* valid_email (string) => boolean
    Simple email format validation using regex.
 */
@@ -77,8 +80,8 @@ function login() {
   // Show loading state
   show_loading_state(login_button, 'Signing in...');
 
-  // Authenticate against user database
-  authenticate_user(email, password)
+  // Authenticate against Firebase
+  authenticate_user_firebase(email, password)
     .then(user => {
       console.log("Login successful for:", user.email);
       
@@ -86,7 +89,7 @@ function login() {
       sessionStorage.setItem('currentUser', JSON.stringify(user));
       
       // Show success message
-      show_form_message(form_message, `Welcome back, ${user.firstName}! Redirecting...`, 'success');
+      show_form_message(form_message, `Welcome back! Redirecting...`, 'success');
       
       // Navigate to home page with animation
       setTimeout(() => {
@@ -108,7 +111,63 @@ function goto_rooms() {
   navigate_with_animation('rooms/rooms.html');
 }
 
+/* authenticate_user_firebase(email, password) => Promise<User>
+   Authenticate user against Firebase.
+*/
+async function authenticate_user_firebase(email, password) {
+  try {
+    // Sign in with Firebase
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const firebaseUser = userCredential.user;
+    
+    console.log("Firebase user authenticated:", firebaseUser.uid);
+    
+    // Create user object from Firebase user
+    const user = {
+      id: firebaseUser.uid,
+      email: firebaseUser.email,
+      displayName: firebaseUser.displayName || firebaseUser.email.split('@')[0],
+      lastLogin: new Date().toISOString(),
+      isActive: true
+    };
+    
+    return user;
+  } catch (error) {
+    console.error('Firebase authentication error:', error);
+    
+    // Map Firebase error codes to user-friendly messages
+    let errorMessage = 'Authentication failed. Please try again.';
+    
+    switch (error.code) {
+      case 'auth/invalid-email':
+        errorMessage = 'Invalid email address format.';
+        break;
+      case 'auth/user-disabled':
+        errorMessage = 'This account has been disabled.';
+        break;
+      case 'auth/user-not-found':
+        errorMessage = 'No account found with this email.';
+        break;
+      case 'auth/wrong-password':
+        errorMessage = 'Incorrect password.';
+        break;
+      case 'auth/invalid-credential':
+        errorMessage = 'Invalid email or password.';
+        break;
+      case 'auth/too-many-requests':
+        errorMessage = 'Too many failed login attempts. Please try again later.';
+        break;
+      case 'auth/network-request-failed':
+        errorMessage = 'Network error. Please check your connection.';
+        break;
+    }
+    
+    throw new Error(errorMessage);
+  }
+}
+
 /* authenticate_user(email, password) => Promise<User>
+   [DEPRECATED] Legacy authentication function - kept for fallback.
    Authenticate user against the users database.
 */
 async function authenticate_user(email, password) {
@@ -173,8 +232,19 @@ function get_current_user() {
    Log out the current user and redirect to login.
 */
 function logout() {
-  sessionStorage.removeItem('currentUser');
-  navigate_with_animation('../login/login.html');
+  // Sign out from Firebase
+  signOut(auth)
+    .then(() => {
+      console.log('User signed out from Firebase');
+      sessionStorage.removeItem('currentUser');
+      navigate_with_animation('../login/login.html');
+    })
+    .catch((error) => {
+      console.error('Error signing out:', error);
+      // Still clear local session even if Firebase signout fails
+      sessionStorage.removeItem('currentUser');
+      navigate_with_animation('../login/login.html');
+    });
 }
 
 /* check_logged_in() => boolean
