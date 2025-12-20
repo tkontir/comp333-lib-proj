@@ -129,46 +129,7 @@
 			</div>
 		</section>
 
-		<!-- Sign In Modal -->
-		<div id="signin-modal" class="modal">
-			<div class="modal-backdrop"></div>
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2>Welcome Back</h2>
-					<button class="modal-close" id="modal-close-btn">
-						<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-					</button>
-				</div>
-				<form id="login_form" class="login-form" novalidate>
-					<div class="form-group">
-						<label for="username_input">Email Address</label>
-						<input id="username_input" name="username" type="email" autocomplete="email" placeholder="student@wesleyan.edu"/>
-						<div class="form-help" id="username_help" aria-live="polite"></div>
-					</div>
-
-					<div class="form-group">
-						<label for="password_input">Password</label>
-						<input id="password_input" name="password" type="password" autocomplete="current-password" placeholder="Enter your password"/>
-						<div class="form-help" id="password_help" aria-live="polite"></div>
-					</div>
-
-					<div id="form_message" role="status" aria-live="polite" class="form-message"></div>
-					
-					<div class="form-actions">
-						<button type="button" id="login_button" class="btn btn-primary full-width">
-							<span>Sign In</span>
-						</button>
-						<button type="button" id="guest_button" class="btn btn-secondary full-width">
-							<span>Continue as Guest</span>
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-
-		<script src="login/login.js" defer></script>
+		<!-- Modal removed - users now navigate to login/login.html -->
 		<script src="scripts/animations.js" defer></script>
 		
 		<!-- Fallback button handlers in case animations.js doesn't load -->
