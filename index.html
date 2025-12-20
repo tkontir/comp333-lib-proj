@@ -194,14 +194,19 @@
 					getStartedBtn.setAttribute('data-handled', 'true');
 					getStartedBtn.addEventListener('click', function(e) {
 						e.preventDefault();
-						console.log('Fallback: Get Started clicked');
-						const modal = document.getElementById('signin-modal');
-						if (modal) {
-							modal.classList.add('active');
-							document.body.style.overflow = 'hidden';
-						} else {
-							window.location.href = 'rooms/rooms.html';
-						}
+						console.log('Get Started clicked - navigating to login');
+						window.location.href = 'login/login.html';
+					});
+				}
+				
+				// Sign In button
+				const signInBtn = document.getElementById('sign-in-btn');
+				if (signInBtn && !signInBtn.hasAttribute('data-handled')) {
+					signInBtn.setAttribute('data-handled', 'true');
+					signInBtn.addEventListener('click', function(e) {
+						e.preventDefault();
+						console.log('Sign In clicked - navigating to login');
+						window.location.href = 'login/login.html';
 					});
 				}
 				
