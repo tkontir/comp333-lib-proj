@@ -90,8 +90,6 @@ async function createUserFirebase(userInfo) {
       email: firebaseUser.email,
       firstName: userInfo.firstName,
       lastName: userInfo.lastName,
-      role: userInfo.role,
-      department: userInfo.department,
       displayName: `${userInfo.firstName} ${userInfo.lastName}`,
       createdAt: new Date().toISOString(),
       lastLogin: new Date().toISOString(),
@@ -200,8 +198,6 @@ async function signup() {
   const lastNameInput = document.getElementById('last_name_input');
   const emailInput = document.getElementById('email_input');
   const usernameInput = document.getElementById('username_input');
-  const departmentInput = document.getElementById('department_input');
-  const roleInput = document.getElementById('role_input');
   const passwordInput = document.getElementById('password_input');
   const confirmPasswordInput = document.getElementById('confirm_password_input');
   const formMessage = document.getElementById('form_message');
@@ -215,8 +211,6 @@ async function signup() {
   const lastName = lastNameInput.value.trim();
   const email = emailInput.value.trim();
   const username = usernameInput.value.trim();
-  const department = departmentInput.value;
-  const role = roleInput.value;
   const password = passwordInput.value;
   const confirmPassword = confirmPasswordInput.value;
 
@@ -255,16 +249,6 @@ async function signup() {
     hasErrors = true;
   }
 
-  if (!department) {
-    showFieldError(document.getElementById('department_help'), 'Please select your department');
-    hasErrors = true;
-  }
-
-  if (!role) {
-    showFieldError(document.getElementById('role_help'), 'Please select your role');
-    hasErrors = true;
-  }
-
   if (!password) {
     showFieldError(document.getElementById('password_help'), 'Password is required');
     hasErrors = true;
@@ -295,9 +279,7 @@ async function signup() {
       password,
       firstName,
       lastName,
-      username,
-      department,
-      role
+      username
     });
 
     console.log("Sign-up successful for:", newUser.email);
